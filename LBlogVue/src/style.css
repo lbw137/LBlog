@@ -1,0 +1,122 @@
+/* Reset CSS */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  line-height: 1;
+  font-family: sans-serif;
+}
+
+/* 去除列表样式 */
+ul, ol {
+  list-style: none;
+}
+
+/* 去除链接样式 */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 去除图片下划线和间隙 */
+img {
+  vertical-align: middle;
+  border-style: none;
+}
+
+/* 去除表格的默认样式 */
+table {
+  border-collapse: collapse;
+}
+
+/* 去除按钮和输入框的默认样式 */
+button,
+input,
+optgroup,
+select,
+textarea {
+  margin: 0;
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+}
+
+/* 去除按钮和输入框的聚焦时的边框和阴影 */
+button,
+input {
+  overflow: visible;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+/* 去除按钮的默认样式 */
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  -webkit-appearance: button;
+}
+
+/* 去除数字输入框的箭头 */
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/* 去除搜索框的清除按钮 */
+[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/* 去除输入框的内边距和外边距 */
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  color: inherit;
+  opacity: 0.54;
+}
+
+/* 去除输入框的聚焦时的轮廓 */
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+/* 去除表单元素的默认样式 */
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* 去除表单元素的默认样式 */
+legend {
+  padding: 0;
+}
+
+/* 去除表格的间隙 */
+td,
+th {
+  padding: 0;
+  text-align: left;
+}
+
+/* 去除 hr 的默认样式 */
+hr {
+  border: 0;
+  height: 0;
+  border-top: 1px solid #eee;
+}
