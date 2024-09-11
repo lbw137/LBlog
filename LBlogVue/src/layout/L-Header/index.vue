@@ -1,5 +1,9 @@
 <template>
-  <a-layout-header class="header">
+  <a-layout-header
+    :class="{
+      transition: istransition
+    }"
+  >
     <a href="/" class="logo">
       <h3>LBW's Blog</h3>
     </a>
@@ -15,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { h, ref, computed, watch, onMounted } from 'vue';
+import { h, ref, computed, watch, nextTick } from 'vue';
 import { MenuProps } from 'ant-design-vue';
 import { useRouter, useRoute } from 'vue-router';
 import { routes } from '../../router';
@@ -23,6 +27,7 @@ const $router = useRouter();
 const $route = useRoute();
 const current = ref<string[]>([$route.path]);
 const items = ref<MenuProps['items']>([]);
+const istransition = ref(true);
 routes[0].children?.forEach((i) => {
   items.value?.push({
     key: i.path,
@@ -46,21 +51,27 @@ const handleScroll = () => {
   }
 };
 const isHome = computed(() => $route.path === '/home');
-onMounted(() => {
-  const header = document.querySelector('header');
-  if (header) {
-    header.style.backgroundColor = isHome.value ? 'transparent' : '#1b1c1d';
+watch(
+  isHome,
+  (newValue) => {
+    nextTick(() => {
+      const header = document.querySelector('header');
+      if (newValue) {
+        window.addEventListener('scroll', handleScroll);
+        istransition.value = true;
+      } else {
+        window.removeEventListener('scroll', handleScroll);
+        istransition.value = false;
+      }
+      if (header) {
+        header.style.backgroundColor = newValue ? 'transparent' : '#1b1c1d';
+      }
+    });
+  },
+  {
+    immediate: true
   }
-});
-
-watch(isHome, (newValue) => {
-  const header = document.querySelector('header');
-  if (header) {
-    if (newValue) window.addEventListener('scroll', handleScroll);
-    else window.removeEventListener('scroll', handleScroll);
-    header.style.backgroundColor = newValue ? 'transparent' : '#1b1c1d';
-  }
-});
+);
 </script>
 
 <style scoped lang="scss">
@@ -68,10 +79,12 @@ watch(isHome, (newValue) => {
   display: flex;
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 10;
   width: 100%;
   height: 64px;
   background-color: transparent;
+}
+.transition {
   transition: background-color 0.8s ease;
 }
 .home {
@@ -84,8 +97,9 @@ watch(isHome, (newValue) => {
 }
 .ant-menu {
   line-height: 64px;
-  background-color: inherit;
+  background-color: transparent;
   color: #8dd0dd;
+  transition: background-color 0.8s ease;
   :deep(.ant-menu-item) {
     &::after {
       border: 0 !important;

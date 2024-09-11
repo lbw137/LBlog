@@ -4,7 +4,7 @@
     <LHeader>
       <!-- 首页背景图 -->
       <template #img>
-        <div class="img"></div>
+        <LImg />
       </template>
     </LHeader>
     <!-- 内容区域 -->
@@ -18,14 +18,7 @@
 import LHeader from './L-Header/index.vue';
 import LContent from './L-Content/index.vue';
 import LFooter from './L-Footer/index.vue';
+import LImg from './L-Img/index.vue';
 </script>
 
-<style scoped lang="scss">
-.img {
-  position: absolute;
-  background: url('../assets/image/bg5.png') center no-repeat;
-  background-size: cover;
-  width: 100%;
-  height: 100vh;
-}
-</style>
+<style scoped lang="scss"></style>
