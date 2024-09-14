@@ -22,10 +22,7 @@ watch(
       const content: HTMLBaseElement | null =
         document.querySelector('.content');
       if (content) {
-        content.style.marginTop = newValue ? 'calc(100vh - 64rem)' : '0';
-        newValue
-          ? (content.className = 'content ishome')
-          : (content.className = 'content');
+        content.style.marginTop = newValue ? 'calc(100vh - 6.4rem)' : '0';
       }
     });
   },
@@ -42,7 +39,7 @@ watch(
 }
 
 .conDiv {
-  padding-top: 2rem;
+  padding-top: 2%;
   display: flex;
   justify-content: space-around;
   .left {
@@ -53,20 +50,28 @@ watch(
     width: 15%;
     height: 100vh;
   }
-  .route {
-    width: 60%;
-  }
 }
 
 @media (min-width: 768px) {
-  .ishome {
-    margin-top: calc(100vh - 6.4rem) !important;
+  .route {
+    width: 60%;
+  }
+  .left,
+  .right {
+    display: block;
   }
 }
 
 @media (max-width: 767px) {
   .content {
     margin-top: 0 !important;
+  }
+  .left,
+  .right {
+    display: none;
+  }
+  .route {
+    width: 95%;
   }
 }
 </style>

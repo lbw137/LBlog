@@ -1,5 +1,5 @@
 import {createRouter,createWebHistory,RouteRecordRaw} from 'vue-router'
-import { MailOutlined, AppstoreOutlined } from '@ant-design/icons-vue';
+import { HomeOutlined,BulbOutlined, MailOutlined,MessageOutlined,SmileOutlined,ManOutlined } from '@ant-design/icons-vue';
 export const routes:RouteRecordRaw[] = [
     {
         path:'/',
@@ -11,23 +11,32 @@ export const routes:RouteRecordRaw[] = [
                 component: ()=>import('@/pages/home/index.vue'),
                 meta:{
                     title:'首页',
-                    icon:MailOutlined
+                    icon:HomeOutlined
                 }
             },
             {
                 path:'/category',
-                component: ()=>import('@/pages/category/index.vue'),
+                redirect:'/category/list',
                 meta:{
                     title:'分类',
-                    icon:AppstoreOutlined
-                }
+                    icon:BulbOutlined
+                },
+                children:[
+                    {
+                        path:'/category/list',
+                        component: ()=>import('@/pages/category/list/index.vue'),
+                        meta:{
+                            title:'分类列表'
+                        }
+                    }
+                ]
             },
             {
                 path:'/archivist',
                 component: ()=>import('@/pages/archivist/index.vue'),
                 meta:{
                     title:'归档',
-                    icon:AppstoreOutlined
+                    icon:MailOutlined
                 }
             },
             {
@@ -35,7 +44,7 @@ export const routes:RouteRecordRaw[] = [
                 component: ()=>import('@/pages/dynamic/index.vue'),
                 meta:{
                     title:'动态',
-                    icon:AppstoreOutlined
+                    icon:MessageOutlined
                 }
             },
             {
@@ -43,7 +52,7 @@ export const routes:RouteRecordRaw[] = [
                 component: ()=>import('@/pages/friends/index.vue'),
                 meta:{
                     title:'友链',
-                    icon:AppstoreOutlined
+                    icon:SmileOutlined
                 }
             },
             {
@@ -51,7 +60,7 @@ export const routes:RouteRecordRaw[] = [
                 component: ()=>import('@/pages/about/index.vue'),
                 meta:{
                     title:'关于我',
-                    icon:AppstoreOutlined
+                    icon:ManOutlined
                 }
             }
         ]
