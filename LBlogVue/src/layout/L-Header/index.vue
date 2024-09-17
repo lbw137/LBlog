@@ -30,7 +30,9 @@ import { UnorderedListOutlined } from '@ant-design/icons-vue';
 import LMenu from '../L-Menu/index.vue';
 const $route = useRoute();
 const istransition = ref(true);
-
+const headerColor = getComputedStyle(document.documentElement)
+  .getPropertyValue('--header-color')
+  .trim();
 const handleScroll = () => {
   const header = document.querySelector('header');
   const scrollY = window.scrollY;
@@ -38,7 +40,7 @@ const handleScroll = () => {
     if (scrollY < 300) {
       header.style.backgroundColor = 'transparent';
     } else {
-      header.style.backgroundColor = '#1b1c1d';
+      header.style.backgroundColor = headerColor;
     }
   }
 };
@@ -56,7 +58,7 @@ watch(
         istransition.value = false;
       }
       if (header) {
-        header.style.backgroundColor = newValue ? 'transparent' : '#1b1c1d';
+        header.style.backgroundColor = newValue ? 'transparent' : headerColor;
       }
     });
   },
@@ -73,15 +75,15 @@ watch(
   top: 0;
   z-index: 10;
   width: 100%;
-  height: 6.4rem;
+  height: $header-height;
   background-color: transparent;
   align-items: center;
   padding: 0 !important;
   padding-left: 2% !important;
   .logo h3 {
     display: block;
-    min-width: 12rem;
-    color: #38dbfb;
+    width: $logo-width;
+    color: $logo-color;
   }
   .iconDiv {
     margin-left: auto;
@@ -89,15 +91,16 @@ watch(
     height: inherit;
     padding: 0 1.5rem;
     display: none;
+    color: $text-color;
     &:hover {
-      color: #38dbfb !important;
-      background-color: rgba($color: #fff, $alpha: 0.15);
+      color: $logo-color !important;
+      background-color: $bg-color;
     }
   }
   .iconDiv .icon {
-    color: #8dd0dd;
+    color: inherit;
     vertical-align: text-top;
-    font-size: 2.2rem;
+    font-size: $icon-size;
   }
 }
 .transition {
@@ -111,9 +114,9 @@ watch(
   height: 100vh;
 }
 
-@media (max-width: 767px) {
+@media (max-width: $media-max) {
   .ant-layout-header {
-    background-color: #1b1c1d !important;
+    background-color: $header-color !important;
     transition: none;
   }
   .ant-menu {

@@ -43,15 +43,15 @@ const onClick: MenuProps['onClick'] = ({ key }) => {
 
 <style scoped lang="scss">
 .d-Menu {
-  background-color: #1b1c1d !important;
-  min-width: 8rem;
+  background-color: $header-color !important;
+  width: $d-menu-width;
 }
 
 .h-menu {
-  width: 76.8rem;
-  line-height: 6.4rem;
+  width: $h-menu-width;
+  line-height: $header-height;
   background-color: transparent;
-  color: #8dd0dd;
+  color: $text-color;
   transition: background-color 0.8s ease;
 }
 </style>

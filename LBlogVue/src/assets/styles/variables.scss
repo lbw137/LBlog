@@ -1,0 +1,31 @@
+// variables.scss
+:root {
+  --header-color: #1b1c1d;
+}
+
+// Colors
+$logo-color: #38dbfb;
+$text-color: #8dd0dd;
+$header-color: #1b1c1d;
+$footer-color: #202942;
+$footer-h-color: #f8f9fa;
+$footer-p-color: #adb5bd;
+$bg-color: rgba(
+  $color: #fff,
+  $alpha: 0.15
+);
+// Layout
+$header-height: 6.4rem;
+$logo-width: 12rem;
+$icon-size: 2.2rem;
+$d-menu-width: 8rem;
+$dropitem-width: 10rem;
+$h-menu-width: 76.8rem;
+$QRcode-width: 9.6rem;
+$footer-h-size: 1.6rem;
+$footer-p-size: 1.4rem;
+$footer-logo-size: 2rem;
+$footer-li-height: 2.4rem;
+// Media
+$media-max: 767px;
+$media-min: 768px;

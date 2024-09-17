@@ -1,7 +1,26 @@
 <template>
   <a-layout-content class="content">
     <div class="conDiv">
-      <div class="left">123</div>
+      <div class="left">
+        <a-card hoverable style="width: 100%">
+          <template #cover>
+            <img
+              alt="example"
+              src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
+            />
+          </template>
+          <template #actions>
+            <setting-outlined key="setting" />
+            <edit-outlined key="edit" />
+            <ellipsis-outlined key="ellipsis" />
+          </template>
+          <a-card-meta title="Card title" description="This is the description">
+            <template #avatar>
+              <a-avatar src="https://joeschmoe.io/api/v1/random" />
+            </template>
+          </a-card-meta>
+        </a-card>
+      </div>
       <div class="route">
         <router-view></router-view>
       </div>
@@ -43,26 +62,19 @@ watch(
   display: flex;
   justify-content: space-around;
   .left {
-    width: 15%;
+    width: 20%;
     height: 100vh;
   }
   .right {
     width: 15%;
     height: 100vh;
   }
-}
-
-@media (min-width: 768px) {
   .route {
     width: 60%;
   }
-  .left,
-  .right {
-    display: block;
-  }
 }
 
-@media (max-width: 767px) {
+@media (max-width: $media-max) {
   .content {
     margin-top: 0 !important;
   }
@@ -71,7 +83,7 @@ watch(
     display: none;
   }
   .route {
-    width: 95%;
+    width: 95% !important;
   }
 }
 </style>

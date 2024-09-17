@@ -40,10 +40,10 @@
 
 <script setup lang="ts"></script>
 
-<style scoped>
+<style scoped lang="scss">
 .ant-layout-footer {
-  background-color: #202942;
-  color: #f8f9fa;
+  background-color: $footer-color;
+  color: $footer-h-color;
   padding: 0;
   .top {
     margin: 0 auto;
@@ -54,9 +54,9 @@
       flex: 2;
       padding-right: 3rem;
       p {
-        color: #adb5bd;
+        color: $footer-p-color;
         line-height: 2.4rem;
-        font-size: 1.4rem;
+        font-size: $footer-p-size;
       }
     }
     .artical,
@@ -66,20 +66,20 @@
     }
     .contact {
       img {
-        width: 9.6rem;
+        width: $QRcode-width;
         border-radius: 0.2rem;
       }
     }
     h2 {
-      font-size: 1.6rem;
+      font-size: $footer-h-size;
       margin-bottom: 2rem;
     }
     .introduction h2 {
-      font-size: 2rem;
+      font-size: $footer-logo-size;
     }
     ul li {
       margin-top: 1rem;
-      line-height: 2.4rem;
+      line-height: $footer-li-height;
     }
   }
   .bottom {
@@ -89,8 +89,8 @@
     justify-content: space-between;
     p {
       min-width: 1.7rem;
-      font-size: 1.4rem;
-      color: #adb5bd;
+      font-size: $footer-p-size;
+      color: $footer-p-color;
     }
     ul li {
       display: inline;
@@ -100,10 +100,10 @@
 }
 
 a {
-  color: #adb5bd;
-  font-size: 1.4rem;
+  color: $footer-p-color;
+  font-size: $footer-p-size;
   &:hover {
-    color: #f8f9fa;
+    color: $footer-h-color;
   }
 }
 
