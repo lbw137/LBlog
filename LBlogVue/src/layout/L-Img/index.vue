@@ -1,13 +1,11 @@
 <template>
-  <div class="imgDiv">
-    <div class="bigImg">
-      <div class="img1 img"></div>
-      <div class="img2 img"></div>
-      <div class="img3 img"></div>
-    </div>
-    <div class="wave1"></div>
-    <div class="wave2"></div>
+  <div class="bigImg">
+    <div class="img1 img"></div>
+    <div class="img2 img"></div>
+    <div class="img3 img"></div>
   </div>
+  <div class="wave1"></div>
+  <div class="wave2"></div>
 </template>
 
 <script setup lang="ts">

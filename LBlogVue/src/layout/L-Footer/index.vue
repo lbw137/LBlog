@@ -4,8 +4,7 @@
       <div class="introduction">
         <h2>Loyal's Blog</h2>
         <p>
-          大家好！我叫lyb，这个Loyal's
-          Blog正是用了我名字的首字母，我希望能用它来记录我学习、生活和工作的点滴。
+          大家好！我叫lyb，这是我开发的个人博客网站，我希望能用它来记录我学习、生活和工作的点滴。
         </p>
       </div>
       <div class="artical">
@@ -45,6 +44,7 @@
   background-color: $footer-color;
   color: $footer-h-color;
   padding: 0;
+  min-width: $minWidth;
   .top {
     margin: 0 auto;
     padding: 5% 10%;
@@ -83,18 +83,21 @@
     }
   }
   .bottom {
-    padding: 1% 10%;
+    padding: 1% 5%;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     justify-content: space-between;
     p {
-      min-width: 1.7rem;
+      min-width: auto;
       font-size: $footer-p-size;
       color: $footer-p-color;
     }
-    ul li {
-      display: inline;
-      margin-left: 2rem;
+    ul {
+      min-width: auto;
+      li {
+        display: inline;
+        margin-left: 2rem;
+      }
     }
   }
 }

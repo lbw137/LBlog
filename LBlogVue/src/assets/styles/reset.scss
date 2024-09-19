@@ -32,6 +32,9 @@ ol {
 a {
   text-decoration: none;
   color: inherit;
+  &:hover {
+    color: inherit;
+  }
 }
 
 /* 去除图片下划线和间隙 */

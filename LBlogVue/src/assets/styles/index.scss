@@ -94,3 +94,35 @@
     color: inherit !important;
   }
 }
+
+// 全局的ant-card样式
+.ant-card:hover {
+  box-shadow: $card-shadow;
+}
+
+// content的left的样式
+.ant-card-body {
+  padding: 0 !important;
+}
+
+// content的right的样式
+.ant-card-head {
+  background-color: #f3f4f5 !important;
+  border-bottom: 2px solid #fbbd08 !important;
+}
+
+// ant-tag的样式
+.ant-tag {
+  cursor: pointer;
+  &:hover {
+    box-shadow: $tag-shadow;
+  }
+}
+
+// ant-ribbon的样式
+.ant-ribbon {
+  cursor: pointer;
+  &:hover {
+    box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.15);
+  }
+}

@@ -1,30 +1,11 @@
 <template>
   <a-layout-content class="content">
     <div class="conDiv">
-      <div class="left">
-        <a-card hoverable style="width: 100%">
-          <template #cover>
-            <img
-              alt="example"
-              src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-            />
-          </template>
-          <template #actions>
-            <setting-outlined key="setting" />
-            <edit-outlined key="edit" />
-            <ellipsis-outlined key="ellipsis" />
-          </template>
-          <a-card-meta title="Card title" description="This is the description">
-            <template #avatar>
-              <a-avatar src="https://joeschmoe.io/api/v1/random" />
-            </template>
-          </a-card-meta>
-        </a-card>
-      </div>
+      <LLeft class="left"></LLeft>
       <div class="route">
         <router-view></router-view>
       </div>
-      <div class="right">321</div>
+      <LRight class="right"></LRight>
     </div>
   </a-layout-content>
 </template>
@@ -32,6 +13,8 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import { watch, computed, nextTick } from 'vue';
+import LLeft from './L-Left/index.vue';
+import LRight from './L-Right/index.vue';
 const $route = useRoute();
 const isHome = computed(() => $route.path === '/home');
 watch(
@@ -58,23 +41,17 @@ watch(
 }
 
 .conDiv {
-  padding-top: 2%;
+  padding: 2% 0;
   display: flex;
   justify-content: space-around;
-  .left {
-    width: 20%;
-    height: 100vh;
-  }
-  .right {
-    width: 15%;
-    height: 100vh;
-  }
+  align-items: flex-start;
   .route {
-    width: 60%;
+    width: 50%;
+    min-width: $minWidth;
   }
 }
 
-@media (max-width: $media-max) {
+@media (max-width: $media-max-content) {
   .content {
     margin-top: 0 !important;
   }
@@ -83,7 +60,7 @@ watch(
     display: none;
   }
   .route {
-    width: 95% !important;
+    width: 90% !important;
   }
 }
 </style>

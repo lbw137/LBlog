@@ -114,19 +114,22 @@ watch(
   height: 100vh;
 }
 
-@media (max-width: $media-max) {
+@media (max-width: $media-max-content) {
   .ant-layout-header {
     background-color: $header-color !important;
     transition: none;
   }
+  .imgDiv {
+    display: none !important;
+  }
+}
+
+@media (max-width: $media-max-header) {
   .ant-menu {
     display: none;
   }
   .iconDiv {
     display: block !important;
-  }
-  .imgDiv {
-    display: none !important;
   }
 }
 </style>
