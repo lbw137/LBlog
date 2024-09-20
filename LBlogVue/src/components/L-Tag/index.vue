@@ -1,6 +1,6 @@
 <template>
   <div
-    class="box"
+    class="l-tag"
     :style="{
       backgroundColor: color
     }"
@@ -23,7 +23,7 @@ defineProps({
 <style scoped lang="scss">
 $length: 2.5rem;
 $arrow-length: calc($length * sqrt(2) / 2);
-.box {
+.l-tag {
   position: relative;
   height: $length;
   box-sizing: border-box;

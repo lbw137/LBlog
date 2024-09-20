@@ -92,7 +92,7 @@ watch(
   width: 100%;
   position: absolute;
   bottom: 0;
-  opacity: 0.3;
+  opacity: 0.5;
   z-index: 3;
 }
 .wave2 {
@@ -102,7 +102,7 @@ watch(
   left: -10rem;
   position: absolute;
   bottom: 0;
-  opacity: 0.5;
+  opacity: 0.8;
   z-index: 3;
 }
 </style>
