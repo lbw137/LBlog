@@ -122,3 +122,9 @@ hr {
   height: 0;
   border-top: 1px solid #eee;
 }
+
+// 设置选中文字的背景色和颜色
+::selection {
+  background-color: $logo-color; /* 背景色 */
+  color: #ffffff; /* 文字颜色 */
+}

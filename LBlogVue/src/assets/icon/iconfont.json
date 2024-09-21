@@ -1,0 +1,37 @@
+{
+  "id": "4533720",
+  "name": "vue-components",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "21393188",
+      "name": "56 - Xbox One Controller (Flat)",
+      "font_class": "56-XboxOneControllerFlat",
+      "unicode": "eaac",
+      "unicode_decimal": 60076
+    },
+    {
+      "icon_id": "5114235",
+      "name": "TV",
+      "font_class": "TV---",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "6837084",
+      "name": "401-heart-with-arrow",
+      "font_class": "-heart-with-arrow",
+      "unicode": "e7f9",
+      "unicode_decimal": 59385
+    },
+    {
+      "icon_id": "9631572",
+      "name": "sakura-flower",
+      "font_class": "sakura-flower",
+      "unicode": "e675",
+      "unicode_decimal": 58997
+    }
+  ]
+}

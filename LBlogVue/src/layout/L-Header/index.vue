@@ -4,17 +4,18 @@
       transition: istransition,
       head: true
     }"
+    :style="animateStyle"
   >
     <a href="/" class="logo">
       <h3>Loyal's Blog</h3>
     </a>
-    <LMenu mode="horizontal" class="h-menu"></LMenu>
+    <l-menu mode="horizontal" class="h-menu"></l-menu>
     <a-dropdown class="iconDiv" arrow>
       <a class="ant-dropdown-link" @click.prevent>
-        <UnorderedListOutlined class="icon" />
+        <UnorderedListOutlined class="little-menu" />
       </a>
       <template #overlay>
-        <LMenu class="d-Menu"></LMenu>
+        <l-menu class="d-Menu"></l-menu>
       </template>
     </a-dropdown>
   </a-layout-header>
@@ -24,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, nextTick } from 'vue';
+import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { UnorderedListOutlined } from '@ant-design/icons-vue';
 import LMenu from '../L-Menu/index.vue';
@@ -45,27 +46,18 @@ const handleScroll = () => {
   }
 };
 const isHome = computed(() => $route.path === '/home');
-watch(
-  isHome,
-  (newValue) => {
-    nextTick(() => {
-      const header = document.querySelector('header');
-      if (newValue) {
-        window.addEventListener('scroll', handleScroll);
-        istransition.value = true;
-      } else {
-        window.removeEventListener('scroll', handleScroll);
-        istransition.value = false;
-      }
-      if (header) {
-        header.style.backgroundColor = newValue ? 'transparent' : headerColor;
-      }
-    });
-  },
-  {
-    immediate: true
+const animateStyle = computed(() => {
+  if (isHome.value) {
+    window.addEventListener('scroll', handleScroll);
+    istransition.value = true;
+  } else {
+    window.removeEventListener('scroll', handleScroll);
+    istransition.value = false;
   }
-);
+  return isHome.value
+    ? 'backgroundColor: transparent'
+    : `backgroundColor: ${headerColor}`;
+});
 </script>
 
 <style scoped lang="scss">
@@ -97,7 +89,7 @@ watch(
       background-color: $bg-color;
     }
   }
-  .iconDiv .icon {
+  .iconDiv .little-menu {
     color: inherit;
     vertical-align: text-top;
     font-size: $icon-size;

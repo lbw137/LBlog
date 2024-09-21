@@ -1,5 +1,5 @@
 <template>
-  <a-layout-content class="content">
+  <a-layout-content class="content" :style="mgTop">
     <div class="conDiv">
       <LLeft class="left"></LLeft>
       <div class="route">
@@ -12,25 +12,14 @@
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import { watch, computed, nextTick } from 'vue';
+import { computed } from 'vue';
 import LLeft from './L-Left/index.vue';
 import LRight from './L-Right/index.vue';
 const $route = useRoute();
-const isHome = computed(() => $route.path === '/home');
-watch(
-  isHome,
-  (newValue) => {
-    nextTick(() => {
-      const content: HTMLBaseElement | null =
-        document.querySelector('.content');
-      if (content) {
-        content.style.marginTop = newValue ? 'calc(100vh - 6.4rem)' : '0';
-      }
-    });
-  },
-  {
-    immediate: true
-  }
+const mgTop = computed(() =>
+  $route.path === '/home'
+    ? 'margin-top: calc(100vh - 6.4rem);'
+    : 'margin-top: 0'
 );
 </script>
 
@@ -59,8 +48,23 @@ watch(
   .right {
     display: none;
   }
+
   .route {
     width: 90% !important;
+  }
+}
+@media (max-width: $media-max-header) {
+  .conDiv {
+    padding: 0 !important;
+    .route {
+      width: 100% !important;
+      :deep(.ant-card) {
+        border-radius: 0% !important;
+      }
+    }
+  }
+  .content {
+    background: #efefef;
   }
 }
 </style>

@@ -9,15 +9,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watch, nextTick } from 'vue';
+import { computed, nextTick, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 const $route = useRoute();
 const isHome = computed(() => $route.path === '/home');
-const imgAnimation = () => {
+const imgAnimation = async () => {
+  await nextTick();
   const bigImg: HTMLElement | null = document.querySelector('.bigImg');
   let preX: number | null = null;
   if (bigImg) {
-    bigImg.addEventListener('mousemove', (e: MouseEvent) => {
+    const handler = (e: MouseEvent) => {
       const width = bigImg.offsetWidth;
       const X = e.offsetX;
       const percentage = Number(
@@ -31,27 +32,19 @@ const imgAnimation = () => {
         bigImg.style.setProperty('--percentage', String(newPer));
       }
       preX = X;
-    });
-
+    };
+    bigImg.addEventListener('mousemove', handler);
     bigImg.addEventListener('mouseleave', () => {
       bigImg.style.setProperty('--percentage', '1');
       preX = null;
     });
   }
 };
-
-watch(
-  isHome,
-  (newValue) => {
-    if (newValue) {
-      //等待渲染完成执行动画函数
-      nextTick(imgAnimation);
-    }
-  },
-  {
-    immediate: true
+watchEffect(() => {
+  if (isHome.value) {
+    imgAnimation();
   }
-);
+});
 </script>
 
 <style scoped>

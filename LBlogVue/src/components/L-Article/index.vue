@@ -5,7 +5,7 @@
         <a-badge-ribbon
           :text="item.category"
           placement="start"
-          style="top: 9rem"
+          style="top: 8rem"
         >
           <a-card>
             <h1 class="title">
@@ -42,11 +42,11 @@
               <LButton>阅读全文</LButton>
             </p>
             <div class="footer">
-              <LTag
+              <l-tag
                 v-for="tag in item.tags"
                 :text="tag[0]"
                 :color="tag[1]"
-              ></LTag>
+              ></l-tag>
             </div>
           </a-card>
         </a-badge-ribbon>
@@ -137,7 +137,7 @@ li {
     padding: 1rem 3rem 0;
     text-align: center;
     h1 {
-      font-size: 3rem;
+      font-size: 2.4rem;
       cursor: pointer;
       a {
         display: inline-block;

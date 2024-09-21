@@ -2,11 +2,14 @@ import { App } from 'vue';
 import LArticle from './L-Article/index.vue';
 import LTag from './L-Tag/index.vue';
 import LButton from './L-Button/index.vue';
-
+import LIcon from './L-Icon/index.vue';
+import LTimeline from './L-Timeline/index.vue';
 const globalComponent = {
   LArticle,
   LTag,
-  LButton
+  LButton,
+  LIcon,
+  LTimeline
 };
 
 export default {
