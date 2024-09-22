@@ -38,7 +38,7 @@
               </span>
             </a-space>
             <p>
-              <img :src="item.img" alt="" />
+              <a-image :src="item.img" />
               <LButton>阅读全文</LButton>
             </p>
             <div class="footer">
@@ -62,72 +62,20 @@ import {
   EditFilled,
   ClockCircleFilled
 } from '@ant-design/icons-vue';
-const data = [
-  {
-    title: 'Vue3知识点123123123123123',
-    date: '2024-09-19',
-    views: 2333,
-    letters: '1068',
-    time: '5',
-    img: '/src/assets/image/bg.png',
-    category: '分类列表',
-    tags: [
-      ['666', '#38dbfb'],
-      ['666', '#cae'],
-      ['666', '#cae'],
-      ['666', '#cae'],
-      ['666', '#cae']
-    ]
-  },
-  {
-    title: 'Vue3知识点',
-    date: '2024-09-19',
-    views: 2333,
-    letters: '1068',
-    time: '5',
-    img: '/src/assets/image/bg.png',
-    category: '分类列表',
-    tags: [
-      ['666', '#38dbfb'],
-      ['666', '#cae'],
-      ['666', '#cae'],
-      ['666', '#cae'],
-      ['666', '#cae']
-    ]
-  },
-  {
-    title: 'Vue3知识点',
-    date: '2024-09-19',
-    views: 2333,
-    letters: '1068',
-    time: '5',
-    img: '/src/assets/image/bg.png',
-    category: '分类列表',
-    tags: [
-      ['666', '#38dbfb'],
-      ['666', '#cae'],
-      ['666', '#cae'],
-      ['666', '#cae'],
-      ['666', '#cae']
-    ]
-  },
-  {
-    title: 'Vue3知识点',
-    date: '2024-09-19',
-    views: 2333,
-    letters: '1068',
-    time: '5',
-    img: '/src/assets/image/bg.png',
-    category: '分类列表',
-    tags: [
-      ['666', '#38dbfb'],
-      ['666', '#cae'],
-      ['666', '#cae'],
-      ['666', '#cae'],
-      ['666', '#cae']
-    ]
+defineProps({
+  data: {
+    type: Array as () => {
+      title: string;
+      date: string;
+      views: Number;
+      letters: Number;
+      time: Number;
+      img: string;
+      tags: [string, string][];
+      category: string;
+    }[]
   }
-];
+});
 </script>
 
 <style scoped>

@@ -1,6 +1,4 @@
-<template>
-  <div>友链</div>
-</template>
+<template></template>
 
 <script setup lang="ts"></script>
 

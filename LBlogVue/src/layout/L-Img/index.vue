@@ -1,11 +1,14 @@
 <template>
-  <div class="bigImg">
-    <div class="img1 img"></div>
-    <div class="img2 img"></div>
-    <div class="img3 img"></div>
+  <div class="imgDiv">
+    <l-logo></l-logo>
+    <div class="bigImg">
+      <div class="img1 img"></div>
+      <div class="img2 img"></div>
+      <div class="img3 img"></div>
+    </div>
+    <div class="wave1"></div>
+    <div class="wave2"></div>
   </div>
-  <div class="wave1"></div>
-  <div class="wave2"></div>
 </template>
 
 <script setup lang="ts">
@@ -47,7 +50,24 @@ watchEffect(() => {
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.logo-title {
+  position: absolute;
+  margin: auto;
+  font-size: 3rem;
+  color: #ff0000;
+  z-index: 9;
+}
+
+.imgDiv {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .bigImg {
   position: absolute;
   display: flex;
@@ -97,5 +117,11 @@ watchEffect(() => {
   bottom: 0;
   opacity: 0.8;
   z-index: 3;
+}
+
+@media (max-width: $media-max-content) {
+  .imgDiv {
+    display: none !important;
+  }
 }
 </style>

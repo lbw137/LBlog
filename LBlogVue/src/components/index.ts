@@ -4,12 +4,16 @@ import LTag from './L-Tag/index.vue';
 import LButton from './L-Button/index.vue';
 import LIcon from './L-Icon/index.vue';
 import LTimeline from './L-Timeline/index.vue';
+import LMouse from './L-Mouse/index.vue';
+import LLogo from './L-Logo/index.vue';
 const globalComponent = {
   LArticle,
   LTag,
   LButton,
   LIcon,
-  LTimeline
+  LTimeline,
+  LMouse,
+  LLogo
 };
 
 export default {

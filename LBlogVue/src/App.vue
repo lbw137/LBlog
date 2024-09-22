@@ -1,13 +1,19 @@
 <template>
-  <div>
-    <router-view />
-  </div>
+  <a-config-provider :locale="locale">
+    <div>
+      <router-view />
+      <l-mouse></l-mouse>
+    </div>
+  </a-config-provider>
 </template>
 
 <script setup lang="ts">
-import { useMouseAnimate } from './hooks/useMouse.ts';
+import zhCN from 'ant-design-vue/es/locale/zh_CN';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
 
-useMouseAnimate();
+dayjs.locale('zh-cn');
+const locale = zhCN;
 </script>
 
 <style scoped lang="scss"></style>

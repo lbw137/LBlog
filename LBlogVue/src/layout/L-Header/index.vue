@@ -19,9 +19,7 @@
       </template>
     </a-dropdown>
   </a-layout-header>
-  <div class="imgDiv" v-if="$route.path === '/home'">
-    <slot name="img"></slot>
-  </div>
+  <slot name="img" v-if="$route.path === '/home'"></slot>
 </template>
 
 <script setup lang="ts">
@@ -99,20 +97,10 @@ const animateStyle = computed(() => {
   transition: background-color 0.8s ease;
 }
 
-.imgDiv {
-  position: absolute;
-  justify-content: center;
-  width: 100%;
-  height: 100vh;
-}
-
 @media (max-width: $media-max-content) {
   .ant-layout-header {
     background-color: $header-color !important;
     transition: none;
-  }
-  .imgDiv {
-    display: none !important;
   }
 }
 

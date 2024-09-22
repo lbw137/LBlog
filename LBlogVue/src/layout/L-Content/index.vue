@@ -25,7 +25,7 @@ const mgTop = computed(() =>
 
 <style scoped lang="scss">
 .content {
-  background: url('../../assets/image/bg.png') center fixed no-repeat;
+  background: url('../../assets/image/bg.jfif') center fixed no-repeat;
   background-size: cover;
 }
 

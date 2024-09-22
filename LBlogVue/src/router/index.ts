@@ -42,8 +42,8 @@ export const routes: RouteRecordRaw[] = [
         }
       },
       {
-        path: '/dynamic',
-        component: () => import('@/pages/dynamic/index.vue'),
+        path: '/moments',
+        component: () => import('@/pages/moments/index.vue'),
         meta: {
           title: '动态',
           icon: MessageOutlined

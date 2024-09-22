@@ -1,65 +1,13 @@
 <template>
   <div class="l-timeline">
-    <div class="l-tl-item">
-      <div class="l-tl-head">2024年9月</div>
+    <div class="l-tl-item" v-for="item in data">
+      <div class="l-tl-head">{{ item.date }}</div>
       <div class="l-tl-body">
-        <!-- 第一个子元素 -->
-        <div class="l-tl-blog">
-          <span>22日</span>
+        <div class="l-tl-blog" v-for="blog in item.blogs">
+          <span>{{ blog.day }}</span>
           <div class="l-tl-con">
             <div class="l-tl-title">
-              <p>Vue3知识点</p>
-            </div>
-          </div>
-        </div>
-        <!-- 第二个子元素 -->
-        <div class="l-tl-blog">
-          <span>10日</span>
-          <div class="l-tl-con">
-            <div class="l-tl-title">
-              <p>博客项目，启动</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="l-tl-item">
-      <div class="l-tl-head">2024年9月</div>
-      <div class="l-tl-body">
-        <div class="l-tl-blog">
-          <span>22日</span>
-          <div class="l-tl-con">
-            <div class="l-tl-title">
-              <p>Vue3知识点</p>
-            </div>
-          </div>
-        </div>
-        <div class="l-tl-blog">
-          <span>10日</span>
-          <div class="l-tl-con">
-            <div class="l-tl-title">
-              <p>博客项目，启动！！!</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="l-tl-item">
-      <div class="l-tl-head">2024年9月</div>
-      <div class="l-tl-body">
-        <div class="l-tl-blog">
-          <span>22日</span>
-          <div class="l-tl-con">
-            <div class="l-tl-title">
-              <p>Vue3知识点</p>
-            </div>
-          </div>
-        </div>
-        <div class="l-tl-blog">
-          <span>10日</span>
-          <div class="l-tl-con">
-            <div class="l-tl-title">
-              <p>博客项目，启动！！!</p>
+              <p>{{ blog.title }}</p>
             </div>
           </div>
         </div>
@@ -68,7 +16,13 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+defineProps({
+  data: {
+    type: Object
+  }
+});
+</script>
 
 <style scoped lang="scss">
 $first-color: #23b7e5;
@@ -148,10 +102,18 @@ $fifth-color: #f05050;
                 padding: 0.8rem;
                 border-radius: 0.5rem;
                 word-break: break-word;
+                cursor: pointer;
+                transition: all 0.5s ease;
                 @if $i%2 != 0 {
                   margin-left: auto;
+                  &:hover {
+                    transform: translateX(-1rem);
+                  }
                 } @else {
                   margin-right: auto;
+                  &:hover {
+                    transform: translateX(1rem);
+                  }
                 }
                 &::before {
                   content: '';

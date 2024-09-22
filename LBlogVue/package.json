@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
+    "animate.css": "^4.1.1",
     "ant-design-vue": "^4.2.3",
+    "lblogvue": "file:",
     "pinia": "^2.2.2",
     "sass": "^1.78.0",
     "scss": "^0.2.4",

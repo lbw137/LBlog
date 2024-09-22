@@ -6,6 +6,7 @@ import Antd from 'ant-design-vue';
 import { createPinia } from 'pinia';
 import GlobalComponents from './components';
 import './assets/icon/iconfont.js';
+
 const pinia = createPinia();
 
 const app = createApp(App);
