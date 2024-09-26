@@ -74,26 +74,4 @@ const router = createRouter({
   routes
 });
 
-//路由跳转后缓慢滚动至顶部
-const smoothScrollToTop = (duration = 300) => {
-  const start = window.scrollY;
-  const startTime = performance.now();
-  const animateScroll = (currentTime: number) => {
-    const timeElapsed = currentTime - startTime;
-    const progress = Math.min(timeElapsed / duration, 1);
-    const easeInOut = 0.5 - Math.cos(progress * Math.PI) / 2;
-
-    window.scrollTo(0, start * (1 - easeInOut));
-
-    if (timeElapsed < duration) {
-      requestAnimationFrame(animateScroll);
-    }
-  };
-  requestAnimationFrame(animateScroll);
-};
-
-router.afterEach(() => {
-  smoothScrollToTop();
-});
-
 export default router;

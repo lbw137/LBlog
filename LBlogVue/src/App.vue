@@ -2,7 +2,7 @@
   <a-config-provider :locale="locale">
     <div>
       <router-view />
-      <l-mouse></l-mouse>
+      <l-mouse v-if="$store.mouseEffect"></l-mouse>
     </div>
   </a-config-provider>
 </template>
@@ -11,7 +11,8 @@
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
-
+import { useStore } from './store';
+const $store = useStore();
 dayjs.locale('zh-cn');
 const locale = zhCN;
 </script>

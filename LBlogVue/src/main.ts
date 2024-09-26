@@ -6,8 +6,9 @@ import Antd from 'ant-design-vue';
 import { createPinia } from 'pinia';
 import GlobalComponents from './components';
 import './assets/icon/iconfont.js';
-
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
 
 const app = createApp(App);
 app.use(router).use(Antd).use(pinia).use(GlobalComponents);

@@ -10,14 +10,13 @@
 </template>
 
 <script setup lang="ts">
-import { routes } from '../../router';
+import { routes } from '../../../router';
 import { MenuProps } from 'ant-design-vue';
 import { useRouter, useRoute } from 'vue-router';
 import { ref, h, computed } from 'vue';
 const $route = useRoute();
 const $router = useRouter();
 const current = computed(() => [$route.path]);
-
 const items = ref<MenuProps['items']>([]);
 routes[0].children?.forEach((item) => {
   items.value?.push({
@@ -37,6 +36,10 @@ defineProps({
   }
 });
 const onClick: MenuProps['onClick'] = ({ key }) => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
   $router.push((key as string).trim());
 };
 </script>

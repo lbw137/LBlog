@@ -6,7 +6,7 @@
       </template>
       <div class="area">
         <h1>Loyal</h1>
-        <span> 洛琪希，我的洛琪希，嘻嘻~~~ </span>
+        <l-span>洛琪希，我的洛琪希，嘻嘻~~~</l-span>
       </div>
       <a-collapse
         v-model:activeKey="activeKey"

@@ -12,41 +12,40 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, watchEffect } from 'vue';
-import { useRoute } from 'vue-router';
-const $route = useRoute();
-const isHome = computed(() => $route.path === '/home');
-const imgAnimation = async () => {
+import { nextTick, onMounted, onUnmounted } from 'vue';
+var bigImg: HTMLElement;
+var moveHandler: (e: MouseEvent) => void;
+var leaveHandler: () => void;
+let preX: number | null = null;
+
+onMounted(async () => {
   await nextTick();
-  const bigImg: HTMLElement | null = document.querySelector('.bigImg');
-  let preX: number | null = null;
-  if (bigImg) {
-    const handler = (e: MouseEvent) => {
-      const width = bigImg.offsetWidth;
-      const X = e.offsetX;
-      const percentage = Number(
-        getComputedStyle(bigImg).getPropertyValue('--percentage').trim()
-      );
-      let newPer: number;
-      if (preX !== null) {
-        const dif = preX - X;
-        let change = (2 / width) * dif;
-        newPer = percentage - change; // 往右走时要变大，左走相反
-        bigImg.style.setProperty('--percentage', String(newPer));
-      }
-      preX = X;
-    };
-    bigImg.addEventListener('mousemove', handler);
-    bigImg.addEventListener('mouseleave', () => {
-      bigImg.style.setProperty('--percentage', '1');
-      preX = null;
-    });
-  }
-};
-watchEffect(() => {
-  if (isHome.value) {
-    imgAnimation();
-  }
+  bigImg = document.querySelector('.bigImg') as HTMLElement;
+  moveHandler = (e: MouseEvent) => {
+    const width = bigImg.offsetWidth;
+    const X = e.offsetX;
+    const percentage = Number(
+      getComputedStyle(bigImg).getPropertyValue('--percentage').trim()
+    );
+    let newPer: number;
+    if (preX !== null) {
+      const dif = preX - X;
+      let change = (2 / width) * dif;
+      newPer = percentage - change; // 往右走时要变大，左走相反
+      bigImg.style.setProperty('--percentage', String(newPer));
+    }
+    preX = X;
+  };
+  leaveHandler = () => {
+    bigImg.style.setProperty('--percentage', '1');
+    preX = null;
+  };
+  bigImg.addEventListener('mousemove', moveHandler);
+  bigImg.addEventListener('mouseleave', leaveHandler);
+});
+onUnmounted(() => {
+  bigImg.removeEventListener('mousemove', moveHandler);
+  bigImg.removeEventListener('mouseleave', leaveHandler);
 });
 </script>
 

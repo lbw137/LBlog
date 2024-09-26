@@ -50,7 +50,14 @@ const data = {
     {
       date: '2024年9月',
       blogs: [
-        { day: '22日', title: 'Vue3知识点' },
+        { day: '22日', title: '啊十大十大科技' },
+        { day: '10日', title: '博客项目，启动' }
+      ]
+    },
+    {
+      date: '2024年9月',
+      blogs: [
+        { day: '22日', title: '啊十大十大科技' },
         { day: '10日', title: '博客项目，启动' }
       ]
     }

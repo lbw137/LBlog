@@ -10,7 +10,7 @@ const data = [
     views: 2333,
     letters: '1068',
     time: '5',
-    img: '/src/assets/image/bg.png',
+    img: '/src/assets/image/bg.jpg',
     category: '分类列表',
     tags: [
       ['666', '#38dbfb'],
@@ -26,7 +26,7 @@ const data = [
     views: 2333,
     letters: '1068',
     time: '5',
-    img: '/src/assets/image/bg.png',
+    img: '/src/assets/image/bg.jpg',
     category: '分类列表',
     tags: [
       ['666', '#38dbfb'],
@@ -42,7 +42,7 @@ const data = [
     views: 2333,
     letters: '1068',
     time: '5',
-    img: '/src/assets/image/bg.png',
+    img: '/src/assets/image/bg.jpg',
     category: '分类列表',
     tags: [
       ['666', '#38dbfb'],
@@ -58,7 +58,7 @@ const data = [
     views: 2333,
     letters: '1068',
     time: '5',
-    img: '/src/assets/image/bg.png',
+    img: '/src/assets/image/bg.jpg',
     category: '分类列表',
     tags: [
       ['666', '#38dbfb'],

@@ -6,10 +6,13 @@
     }"
     :style="animateStyle"
   >
-    <a href="/" class="logo">
+    <router-link to="/home" class="logo" @click="handleClick">
       <h3>Loyal's Blog</h3>
-    </a>
+    </router-link>
     <l-menu mode="horizontal" class="h-menu"></l-menu>
+    <a-checkbox v-model:checked="$store.mouseEffect" style="color: #8dd0dd">
+      鼠标特效
+    </a-checkbox>
     <a-dropdown class="iconDiv" arrow>
       <a class="ant-dropdown-link" @click.prevent>
         <UnorderedListOutlined class="little-menu" />
@@ -19,15 +22,19 @@
       </template>
     </a-dropdown>
   </a-layout-header>
-  <slot name="img" v-if="$route.path === '/home'"></slot>
+  <LImg v-if="$route.path === '/home'" />
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { UnorderedListOutlined } from '@ant-design/icons-vue';
-import LMenu from '../L-Menu/index.vue';
+import LMenu from './L-Menu/index.vue';
+import LImg from './L-Img/index.vue';
+import { useStore } from '../../store';
+const $store = useStore();
 const $route = useRoute();
+const $router = useRouter();
 const istransition = ref(true);
 const headerColor = getComputedStyle(document.documentElement)
   .getPropertyValue('--header-color')
@@ -56,6 +63,10 @@ const animateStyle = computed(() => {
     ? 'backgroundColor: transparent'
     : `backgroundColor: ${headerColor}`;
 });
+const handleClick = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  $router.push('/home'); // 动画完成后进行路由跳转
+};
 </script>
 
 <style scoped lang="scss">
@@ -69,7 +80,7 @@ const animateStyle = computed(() => {
   background-color: transparent;
   align-items: center;
   padding: 0 !important;
-  padding-left: 2% !important;
+  padding-left: 2.5rem !important;
   .logo h3 {
     display: block;
     width: $logo-width;
