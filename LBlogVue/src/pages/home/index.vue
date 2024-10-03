@@ -3,6 +3,8 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue';
+import request from '../../utils/request';
 const data = [
   {
     id: 1,
@@ -73,6 +75,14 @@ const data = [
     ]
   }
 ];
+onMounted(() => {
+  setTimeout(() => {
+    request({
+      url: '/user/test',
+      method: 'get'
+    });
+  }, 1000 * 6);
+});
 </script>
 
 <style scoped></style>

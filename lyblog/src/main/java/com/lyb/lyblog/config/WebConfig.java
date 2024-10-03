@@ -10,6 +10,8 @@ import com.lyb.lyblog.interceptor.JWTInterceptor;
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new JWTInterceptor()).addPathPatterns("/**").excludePathPatterns("/user/login");
+        registry.addInterceptor(new JWTInterceptor())
+                .addPathPatterns("/user/**", "/category/**", "/tag/**") // 匹配以这些路径开头的请求
+                .excludePathPatterns("/user/login", "/user/refreshToken"); // 排除特定的路径
     }
 }

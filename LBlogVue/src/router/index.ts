@@ -10,6 +10,8 @@ import {
   ManOutlined,
   SettingOutlined
 } from '@ant-design/icons-vue';
+import { useStore } from '../store';
+
 export const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -106,9 +108,10 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to) => {
+  const $store = useStore();
   if (to.name === 'login') return true;
   if (to.path.includes('admin')) {
-    if (!localStorage.getItem('token')) return { name: 'login' };
+    if (!$store.refresh_token) return { name: 'login' };
     return true;
   }
 });

@@ -58,6 +58,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
+import { reqLogin } from '../../api/user';
 const $router = useRouter();
 const formRef = ref();
 interface FormState {
@@ -68,9 +69,9 @@ const formState = reactive<FormState>({
   username: '',
   password: ''
 });
-const onFinish = (values: FormState) => {
-  localStorage.setItem('token', 'lbwnb');
-  $router.push('/admin');
+const onFinish = async (values: FormState) => {
+  const res = await reqLogin(values);
+  if (res.success) $router.push('/home');
 };
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);

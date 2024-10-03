@@ -142,7 +142,7 @@ class ParticleGroup {
 
 // Particle Emitter
 class Emitter extends ParticleGroup {
-  constructor(x=0, y=0, life = 20, mouse = true, radius = false) {
+  constructor(x = 0, y = 0, life = 20, mouse = true, radius = false) {
     super();
     this.mouse = mouse;
     this.particles = [];
@@ -203,16 +203,16 @@ function animateCanvas(canvas, callback) {
 
 // Update canvas size to fill window
 function resizeCanvas(canvas) {
-  canvas.width = window.innerWidth*devicePixelRatio;
-  canvas.height = window.innerHeight*devicePixelRatio;
+  canvas.width = window.innerWidth * devicePixelRatio;
+  canvas.height = window.innerHeight * devicePixelRatio;
   // 动画默认出现在画布中心
   originx = canvas.width / 2;
   originy = canvas.height / 2;
 }
 
-onMounted(()=>{
-    init();
-})
+onMounted(() => {
+  init();
+});
 </script>
 
 <style scoped lang="scss">
@@ -221,5 +221,6 @@ onMounted(()=>{
   top: 0;
   left: 0;
   pointer-events: none;
+  z-index: 999;
 }
 </style>

@@ -5,7 +5,9 @@ export const useStore = defineStore(
   'store',
   () => {
     const mouseEffect = ref(true);
-    return { mouseEffect };
+    const access_token = ref('');
+    const refresh_token = ref('');
+    return { mouseEffect, access_token, refresh_token };
   },
   {
     persist: {

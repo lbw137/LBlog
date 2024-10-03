@@ -71,4 +71,9 @@ public class Result {
         this.message = message;
         return this;
     }
+
+    public Result code(int code) {
+        this.code = code;
+        return this;
+    }
 }
