@@ -1,75 +1,82 @@
 <template>
-  <!-- 发表评论 -->
-  <a-comment id="comment-submit" style="padding: 1rem 2rem 0">
-    <template #avatar>
-      <a-avatar src="/src/assets/image/roxy.jpg" alt="Roxy" />
-    </template>
-    <template #content>
-      <a-form-item>
-        <a-textarea
-          v-model:value="commentValue"
-          :rows="2"
-          :placeholder="placeholder"
-        />
-      </a-form-item>
-      <a-form-item>
-        <a-button
-          html-type="submit"
-          :loading="submitting"
-          type="primary"
-          @click="handleSubmit"
-        >
-          发表评论
-        </a-button>
-        <a-button
-          danger
-          @click="handleCancel"
-          style="margin-left: 2rem"
-          v-if="Reply.isReply"
-        >
-          取消回复
-        </a-button>
-      </a-form-item>
-    </template>
-  </a-comment>
-  <!-- 评论列表 -->
-  <a-list
-    class="comment-list"
-    :data-source="data"
-    size="small"
-    style="padding: 0 2rem"
-    :pagination="comPagination"
-  >
-    <template #renderItem="{ item }">
-      <a-list-item :id="'comment' + item.id">
-        <a-comment :author="item.author" :avatar="item.avatar">
-          <template #actions>
-            <a href="#comment-submit" @click="handleSwitch($event, true, item)">
-              回复
-            </a>
-          </template>
-          <template #content>
-            <p>
+  <div class="l-comments">
+    <!-- 发表评论 -->
+    <a-comment id="comment-submit" style="padding: 1rem 2rem 0">
+      <template #avatar>
+        <a-avatar src="/src/assets/image/roxy.jpg" alt="Roxy" />
+      </template>
+      <template #content>
+        <a-form-item>
+          <a-textarea
+            v-model:value="commentValue"
+            :rows="2"
+            :placeholder="placeholder"
+          />
+        </a-form-item>
+        <a-form-item>
+          <a-button
+            html-type="submit"
+            :loading="submitting"
+            type="primary"
+            @click="handleSubmit"
+          >
+            发表评论
+          </a-button>
+          <a-button
+            danger
+            @click="handleCancel"
+            style="margin-left: 2rem"
+            v-if="Reply.isReply"
+          >
+            取消回复
+          </a-button>
+        </a-form-item>
+      </template>
+    </a-comment>
+    <!-- 评论数量 -->
+    <slot></slot>
+    <!-- 评论列表 -->
+    <a-list
+      class="comment-list"
+      :data-source="data"
+      size="small"
+      style="padding: 0 2rem"
+      :pagination="comPagination"
+    >
+      <template #renderItem="{ item }">
+        <a-list-item :id="'comment' + item.id">
+          <a-comment :author="item.author" :avatar="item.avatar">
+            <template #actions>
               <a
-                :href="'#comment' + item.replyId"
-                @click="handleSwitch"
-                v-if="item.replyName"
-                class="reply-a"
+                href="#comment-submit"
+                @click="handleSwitch($event, true, item)"
               >
-                @{{ item.replyName }}
+                回复
               </a>
-              {{ item.content }}
-            </p>
-          </template>
-          <template #datetime>
-            <a-tooltip :title="item.datetime.format('YYYY-MM-DD HH:mm:ss')">
-              <span>{{ item.datetime.fromNow() }}</span>
-            </a-tooltip>
-          </template>
-        </a-comment>
-      </a-list-item>
-    </template>
-  </a-list>
+            </template>
+            <template #content>
+              <p>
+                <a
+                  :href="'#comment' + item.replyId"
+                  @click="handleSwitch"
+                  v-if="item.replyName"
+                  class="reply-a"
+                >
+                  @{{ item.replyName }}
+                </a>
+                {{ item.content }}
+              </p>
+            </template>
+            <template #datetime>
+              <a-tooltip :title="item.datetime.format('YYYY-MM-DD HH:mm:ss')">
+                <span>{{ item.datetime.fromNow() }}</span>
+              </a-tooltip>
+            </template>
+          </a-comment>
+        </a-list-item>
+      </template>
+    </a-list>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -138,7 +145,7 @@ const handleSubmit = () => {
     message.warning({
       content: '评论内容不能为空！',
       style: {
-        marginTop: '10px'
+        marginTop: '10vh'
       }
     });
     return;

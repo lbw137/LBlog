@@ -2,6 +2,7 @@
   "name": "lblogvue",
   "private": true,
   "version": "0.0.0",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,8 +13,10 @@
     "@ant-design/icons-vue": "^7.0.1",
     "animate.css": "^4.1.1",
     "ant-design-vue": "^4.2.3",
+    "axios": "^1.7.7",
     "jquery": "^3.7.1",
     "lblogvue": "file:",
+    "md-editor-v3": "^4.20.2",
     "pinia": "^2.2.2",
     "pinia-plugin-persistedstate": "^4.0.2",
     "sass": "^1.78.0",
@@ -24,7 +27,8 @@
   "devDependencies": {
     "@types/jquery": "^3.5.30",
     "@types/node": "^22.5.4",
-    "@vitejs/plugin-vue": "^5.1.2",
+    "@vitejs/plugin-vue": "^5.1.4",
+    "prettier": "3.3.3",
     "typescript": "^5.5.3",
     "vite": "^5.4.1",
     "vue-tsc": "^2.0.29"

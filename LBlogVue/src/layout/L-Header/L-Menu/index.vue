@@ -19,12 +19,25 @@ const $router = useRouter();
 const current = computed(() => [$route.path]);
 const items = ref<MenuProps['items']>([]);
 routes[0].children?.forEach((item) => {
+  if (item.meta?.isHidden) return;
   items.value?.push({
     key: item.path,
     label: item.meta?.title,
-    icon: () => h(item.meta?.icon as any),
-    children: item.children?.map((i) => ({ key: i.path, label: i.meta?.title }))
+    icon: () => h(item.meta?.icon as any) as any,
+    children: item.children?.map((i) => ({
+      key: i.path,
+      label: i.meta?.title
+    }))
   });
+});
+items.value?.push({
+  key: routes[1].path,
+  label: routes[1].meta?.title,
+  icon: () => h(routes[1].meta?.icon as any) as any,
+  children: routes[1].children?.map((i) => ({
+    key: i.path,
+    label: i.meta?.title
+  }))
 });
 defineProps({
   mode: {

@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { UnorderedListOutlined } from '@ant-design/icons-vue';
 import LMenu from './L-Menu/index.vue';
@@ -63,10 +63,15 @@ const animateStyle = computed(() => {
     ? 'backgroundColor: transparent'
     : `backgroundColor: ${headerColor}`;
 });
+
 const handleClick = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
   $router.push('/home'); // 动画完成后进行路由跳转
 };
+// 由于管理页面没有用到layout组件
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
 </script>
 
 <style scoped lang="scss">

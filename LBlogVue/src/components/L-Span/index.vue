@@ -10,7 +10,6 @@ const $slots = useSlots();
 const slot = $slots.default ? $slots.default() : null;
 const content = slot ? slot[0].children : null;
 const contentArray = typeof content === 'string' ? content.split('') : [];
-console.log(contentArray);
 </script>
 
 <style scoped lang="scss">

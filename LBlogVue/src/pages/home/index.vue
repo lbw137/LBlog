@@ -5,6 +5,7 @@
 <script setup lang="ts">
 const data = [
   {
+    id: 1,
     title: 'Vue3知识点123123123123123',
     date: '2024-09-19',
     views: 2333,
@@ -21,6 +22,7 @@ const data = [
     ]
   },
   {
+    id: 2,
     title: 'Vue3知识点',
     date: '2024-09-19',
     views: 2333,
@@ -37,6 +39,7 @@ const data = [
     ]
   },
   {
+    id: 3,
     title: 'Vue3知识点',
     date: '2024-09-19',
     views: 2333,
@@ -53,6 +56,7 @@ const data = [
     ]
   },
   {
+    id: 4,
     title: 'Vue3知识点',
     date: '2024-09-19',
     views: 2333,

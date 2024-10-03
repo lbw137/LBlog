@@ -9,7 +9,7 @@
         >
           <a-card>
             <h1 class="title">
-              <a href="#">{{ item.title }}</a>
+              {{ item.title }}
             </h1>
             <a-space class="info" size="middle">
               <span class="date">
@@ -39,7 +39,7 @@
             </a-space>
             <p>
               <a-image :src="item.img" />
-              <LButton>阅读全文</LButton>
+              <LButton @click="handleClick(item.id)">阅读全文</LButton>
             </p>
             <div class="footer">
               <l-tag
@@ -62,20 +62,27 @@ import {
   EditFilled,
   ClockCircleFilled
 } from '@ant-design/icons-vue';
+import { useRouter } from 'vue-router';
+const $router = useRouter();
 defineProps({
   data: {
     type: Array as () => {
+      id: number;
       title: string;
       date: string;
-      views: Number;
-      letters: Number;
-      time: Number;
+      views: number;
+      letters: number;
+      time: number;
       img: string;
       tags: [string, string][];
       category: string;
     }[]
   }
 });
+const handleClick = (id: number) => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  $router.push('/details/' + id);
+};
 </script>
 
 <style scoped>
@@ -84,15 +91,14 @@ li {
   .ant-card {
     padding: 1rem 3rem 0;
     text-align: center;
-    h1 {
+    .title {
+      width: fit-content;
+      margin: 0 auto;
       font-size: 2.4rem;
       cursor: pointer;
-      a {
-        display: inline-block;
-        transition: transform 0.3s ease;
-        &:hover {
-          transform: scale(1.1);
-        }
+      transition: transform 0.3s ease;
+      &:hover {
+        transform: scale(1.1);
       }
     }
 

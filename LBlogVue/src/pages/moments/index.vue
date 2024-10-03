@@ -108,10 +108,7 @@ const handleComement = (item: any) => {
   color: #88a8f3 !important;
   margin-bottom: 0.5rem !important;
 }
-.ant-list-pagination {
-  text-align: center !important;
-  margin-bottom: 2rem;
-}
+
 .action {
   cursor: pointer;
   -webkit-user-select: none; /* Chrome/Safari */

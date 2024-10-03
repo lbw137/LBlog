@@ -20,7 +20,7 @@ $logo-width: 12rem;
 $icon-size: 2.2rem;
 $d-menu-width: 8rem;
 $dropitem-width: 10rem;
-$h-menu-width: 52rem;
+$h-menu-width: 62rem;
 $QRcode-width: 9.6rem;
 $footer-h-size: 1.6rem;
 $footer-p-size: 1.4rem;
@@ -33,3 +33,9 @@ $media-max-content: 1060px;
 // hover的shadow
 $card-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5) !important;
 $tag-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.15);
+$big-shadow:
+  0 0 10px #ddd,
+  0 0 20px #ddd,
+  0 0 40px #ddd,
+  0 0 80px #ddd,
+  0 0 120px #ddd;

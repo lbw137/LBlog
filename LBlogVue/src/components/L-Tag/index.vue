@@ -34,6 +34,7 @@ $arrow-length: calc($length * sqrt(2) / 2);
   color: #fff;
   border-radius: 0 0.4rem 0.4rem 0;
   cursor: pointer;
+  user-select: none;
   &:hover {
     box-shadow: $tag-shadow;
   }

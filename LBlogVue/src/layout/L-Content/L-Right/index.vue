@@ -1,9 +1,9 @@
 <template>
   <div class="right">
     <a-card style="margin-bottom: 2rem">
-      <template #title
-        ><BookOutlined style="margin-right: 1rem" />随机文章</template
-      >
+      <template #title>
+        <BookOutlined style="margin-right: 1rem" />随机文章
+      </template>
       <ul>
         <li>
           <div class="img"></div>
@@ -29,9 +29,9 @@
       </ul>
     </a-card>
     <a-card>
-      <template #title
-        ><TagsOutlined style="margin-right: 1rem" />标签云</template
-      >
+      <template #title>
+        <TagsOutlined style="margin-right: 1rem" />标签云
+      </template>
       <div class="tags">
         <a-tag color="#f50">#f50</a-tag>
         <a-tag color="#2db7f5">#2db7f5</a-tag>

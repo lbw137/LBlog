@@ -1,11 +1,12 @@
 <template>
   <a-layout-content class="content" :style="mgTop">
-    <div class="conDiv">
+    <div class="conDiv" style="adminStyle">
       <LLeft class="left"></LLeft>
       <div class="route">
         <router-view></router-view>
       </div>
       <LRight class="right"></LRight>
+      <LBacktop></LBacktop>
     </div>
   </a-layout-content>
 </template>
@@ -16,6 +17,7 @@ import { computed } from 'vue';
 import LLeft from './L-Left/index.vue';
 import LRight from './L-Right/index.vue';
 const $route = useRoute();
+// 首页需要顶部距离显示大背景
 const mgTop = computed(() =>
   $route.path === '/home'
     ? 'margin-top: calc(100vh - 6.4rem);'
@@ -48,7 +50,6 @@ const mgTop = computed(() =>
   .right {
     display: none;
   }
-
   .route {
     width: 90% !important;
   }

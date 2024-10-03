@@ -1,12 +1,14 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import categories from './category';
+import admins from './admin';
 import {
   HomeOutlined,
   BulbOutlined,
   MailOutlined,
   MessageOutlined,
   SmileOutlined,
-  ManOutlined
+  ManOutlined,
+  SettingOutlined
 } from '@ant-design/icons-vue';
 export const routes: RouteRecordRaw[] = [
   {
@@ -35,6 +37,7 @@ export const routes: RouteRecordRaw[] = [
       },
       {
         path: '/archivist',
+        name: 'archivist',
         component: () => import('@/pages/archivist/index.vue'),
         meta: {
           title: '归档',
@@ -43,6 +46,7 @@ export const routes: RouteRecordRaw[] = [
       },
       {
         path: '/moments',
+        name: 'moments',
         component: () => import('@/pages/moments/index.vue'),
         meta: {
           title: '动态',
@@ -51,6 +55,7 @@ export const routes: RouteRecordRaw[] = [
       },
       {
         path: '/friends',
+        name: 'friends',
         component: () => import('@/pages/friends/index.vue'),
         meta: {
           title: '友链',
@@ -59,19 +64,53 @@ export const routes: RouteRecordRaw[] = [
       },
       {
         path: '/about',
+        name: 'about',
         component: () => import('@/pages/about/index.vue'),
         meta: {
           title: '关于我',
           icon: ManOutlined
         }
+      },
+      {
+        path: '/details/:id',
+        name: 'details',
+        component: () => import('@/pages/details/index.vue'),
+        meta: {
+          isHidden: true
+        }
       }
     ]
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    redirect: '/admin/blog',
+    component: () => import('@/pages/admin/index.vue'),
+    meta: {
+      title: '管理',
+      icon: SettingOutlined,
+      isHidden: true
+    },
+    children: admins
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/pages/login/index.vue')
   }
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes
+});
+
+router.beforeEach(async (to) => {
+  if (to.name === 'login') return true;
+  if (to.path.includes('admin')) {
+    if (!localStorage.getItem('token')) return { name: 'login' };
+    return true;
+  }
 });
 
 export default router;

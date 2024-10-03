@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1227711",
+      "name": "paper-airplane",
+      "font_class": "paper-airplane",
+      "unicode": "e710",
+      "unicode_decimal": 59152
+    },
+    {
+      "icon_id": "13874746",
+      "name": "edit",
+      "font_class": "edit",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    },
+    {
+      "icon_id": "4352724",
+      "name": "delete",
+      "font_class": "delete",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    },
+    {
+      "icon_id": "5317059",
+      "name": "user",
+      "font_class": "user",
+      "unicode": "e73d",
+      "unicode_decimal": 59197
+    },
+    {
+      "icon_id": "34453011",
+      "name": "lock",
+      "font_class": "lock",
+      "unicode": "e83d",
+      "unicode_decimal": 59453
+    },
+    {
       "icon_id": "21393188",
       "name": "56 - Xbox One Controller (Flat)",
       "font_class": "56-XboxOneControllerFlat",
