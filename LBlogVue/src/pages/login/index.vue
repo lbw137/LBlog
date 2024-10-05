@@ -72,7 +72,7 @@ const onFinish = async (values: loginForm) => {
   loading.value = true;
   const res = await reqLogin(values);
   loading.value = false;
-  if (res.success) {
+  if (res.code === 200) {
     $router.push('/admin');
   }
 };

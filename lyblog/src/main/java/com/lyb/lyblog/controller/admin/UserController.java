@@ -35,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public Result Login(@RequestBody UserLoginDTO userDto, HttpServletResponse response) {
+    public Result userLogin(@RequestBody UserLoginDTO userDto, HttpServletResponse response) {
         String username = userDto.getUsername();
         String password = userDto.getPassword();
         // 验证用户信息
@@ -81,7 +81,6 @@ public class UserController {
                 e.printStackTrace();
                 result.setMessage("token失效");
             }
-            result.setSuccess(false);
             return result.code(401);
         }
         return Result.error().message("用户尚未登陆");

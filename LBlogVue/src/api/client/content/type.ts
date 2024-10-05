@@ -8,7 +8,6 @@ export interface Tags {
 export interface tagsRes {
   code: number;
   msg: string;
-  success: boolean;
   data: {
     tags: Tags[];
   };

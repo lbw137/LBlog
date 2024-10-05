@@ -13,7 +13,6 @@ let admin = axios.create({
 // 请求拦截器
 admin.interceptors.request.use((config) => {
   if (config.url !== 'user/login' && config.url != 'user/refreshToken') {
-    console.log(config.url);
     // 添加短token
     config.headers.Authorization = 'Bearer ' + $store.access_token;
   }
@@ -24,7 +23,7 @@ admin.interceptors.request.use((config) => {
 // 响应拦截器
 admin.interceptors.response.use(
   async (res) => {
-    if (res.data.success) {
+    if (res.data.code === 200) {
       // 如果是刷新token的请求，不提示消息
       if (!isRefreshRequest(res.config)) message.success(res.data.message);
       // 收集短token

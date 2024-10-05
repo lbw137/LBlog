@@ -4,18 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Result {
-    private boolean success;
     private int code;
     private String message;
     private Map<String, Object> data = new HashMap<>();
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
 
     public int getCode() {
         return code;
@@ -43,7 +34,6 @@ public class Result {
 
     public static Result ok() {
         Result result = new Result();
-        result.setSuccess(true);
         result.setCode(200);
         result.setMessage("成功");
         return result;
@@ -51,7 +41,6 @@ public class Result {
 
     public static Result error() {
         Result result = new Result();
-        result.setSuccess(false);
         result.setCode(401);
         result.setMessage("失败");
         return result;

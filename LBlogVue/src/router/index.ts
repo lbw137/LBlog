@@ -84,9 +84,9 @@ export const routes: RouteRecordRaw[] = [
     ]
   },
   {
-    path: '/admin',
+    path: '/adm',
     name: 'admin',
-    redirect: '/admin/blog',
+    redirect: '/adm/blog',
     component: () => import('@/pages/admin/index.vue'),
     meta: {
       title: '管理',

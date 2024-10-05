@@ -20,7 +20,6 @@ public class JWTInterceptor implements HandlerInterceptor {
         String Authorization = request.getHeader("Authorization");
         if (Authorization == null) {
             result.setMessage("未登录");
-            result.setSuccess(false);
             result.setCode(401);
             String json = new ObjectMapper().writeValueAsString(result);
             response.setContentType("application/json;charset=UTF-8");
@@ -44,7 +43,6 @@ public class JWTInterceptor implements HandlerInterceptor {
             e.printStackTrace();
             result.setMessage("token失效");
         }
-        result.setSuccess(false);
         result.setCode(401);
         String json = new ObjectMapper().writeValueAsString(result);
         response.setContentType("application/json;charset=UTF-8");

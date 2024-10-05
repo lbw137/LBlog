@@ -5,7 +5,7 @@ export async function refreshToken() {
   if (promise) return promise;
   promise = new Promise(async (resolve) => {
     const res = await reqRefreshToken();
-    resolve(res.success);
+    resolve(res.code === 200);
   });
   promise.finally(() => {
     promise = null;

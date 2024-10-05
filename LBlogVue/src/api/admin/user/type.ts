@@ -8,7 +8,6 @@ export interface loginForm {
 export interface loginRes {
   code: number;
   msg: string;
-  success: boolean;
   data: {
     access_token: string;
     refresh_token: string;
