@@ -10,7 +10,7 @@ import {
   ManOutlined,
   SettingOutlined
 } from '@ant-design/icons-vue';
-import { useStore } from '../store';
+import { useStore } from '@/store';
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -104,7 +104,11 @@ export const routes: RouteRecordRaw[] = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    // 始终滚动到顶部
+    return { top: 0, behavior: 'smooth' };
+  }
 });
 
 router.beforeEach(async (to) => {

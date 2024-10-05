@@ -1,7 +1,11 @@
 <template>
   <a-config-provider :locale="locale">
     <div>
-      <router-view />
+      <router-view v-slot="{ Component }">
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </router-view>
       <l-mouse v-if="$store.mouseEffect"></l-mouse>
     </div>
   </a-config-provider>

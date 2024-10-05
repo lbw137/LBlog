@@ -12,16 +12,22 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
+        api: 'modern-compiler', // or 'modern'comp
         additionalData: `@import "@/assets/styles/variables.scss";`
       }
     }
   },
   server: {
     proxy: {
-      '/api': {
+      '/admin': {
         target: 'http://localhost:5174',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
+        rewrite: (path) => path.replace(/^\/admin/, '')
+      },
+      '/client': {
+        target: 'http://localhost:5174',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/client/, '')
       }
     }
   }

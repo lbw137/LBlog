@@ -1,4 +1,4 @@
-package com.lyb.lyblog.controller;
+package com.lyb.lyblog.controller.admin;
 
 import org.springframework.web.bind.annotation.RestController;
 

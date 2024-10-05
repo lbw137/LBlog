@@ -1,18 +1,19 @@
 import axios from 'axios';
 import { message } from 'ant-design-vue';
-import { useStore } from '../store';
+import { useStore } from '@/store';
 import { refreshToken, isRefreshRequest } from './refreshToken';
 const $store = useStore();
-let request = axios.create({
+let admin = axios.create({
   // 基础路径
-  baseURL: import.meta.env.VITE_APP_BASE_API,
+  baseURL: import.meta.env.VITE_APP_ADMIN_API,
   // 请求超时时间
   timeout: 5000
 });
 
 // 请求拦截器
-request.interceptors.request.use((config) => {
-  if (config.url !== '/user/login' && config.url != '/user/refreshToken') {
+admin.interceptors.request.use((config) => {
+  if (config.url !== 'user/login' && config.url != 'user/refreshToken') {
+    console.log(config.url);
     // 添加短token
     config.headers.Authorization = 'Bearer ' + $store.access_token;
   }
@@ -21,7 +22,7 @@ request.interceptors.request.use((config) => {
 });
 
 // 响应拦截器
-request.interceptors.response.use(
+admin.interceptors.response.use(
   async (res) => {
     if (res.data.success) {
       // 如果是刷新token的请求，不提示消息
@@ -40,12 +41,13 @@ request.interceptors.response.use(
       if (isSuccess) {
         // 重新请求
         res.config.headers.Authorization = 'Bearer ' + $store.access_token;
-        const resp = await request.request(res.config);
+        const resp = await admin.request(res.config);
         return resp;
       } else {
         // 长token过期，跳转到登录页
         $store.access_token = '';
         $store.refresh_token = '';
+        window.location.href = '/login';
       }
     } else {
       message.error(res.data.message);
@@ -59,4 +61,4 @@ request.interceptors.response.use(
   }
 );
 
-export default request;
+export default admin;

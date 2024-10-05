@@ -1,5 +1,5 @@
 import { InternalAxiosRequestConfig } from 'axios';
-import { reqRefreshToken } from '../api/user';
+import { reqRefreshToken } from '@/api/admin/user';
 let promise: Promise<boolean> | null = null;
 export async function refreshToken() {
   if (promise) return promise;

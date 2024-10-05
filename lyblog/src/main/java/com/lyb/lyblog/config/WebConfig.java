@@ -11,7 +11,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new JWTInterceptor())
-                .addPathPatterns("/user/**", "/category/**", "/tag/**") // 匹配以这些路径开头的请求
-                .excludePathPatterns("/user/login", "/user/refreshToken"); // 排除特定的路径
+                .addPathPatterns("/admin/**") // 匹配以这些路径开头的请求
+                .excludePathPatterns("/admin/user/login", "/admin/user/refreshToken"); // 排除特定的路径
     }
 }

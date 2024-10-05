@@ -31,7 +31,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { UnorderedListOutlined } from '@ant-design/icons-vue';
 import LMenu from './L-Menu/index.vue';
 import LImg from './L-Img/index.vue';
-import { useStore } from '../../store';
+import { useStore } from '@/store';
 const $store = useStore();
 const $route = useRoute();
 const $router = useRouter();
@@ -65,7 +65,6 @@ const animateStyle = computed(() => {
 });
 
 const handleClick = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
   $router.push('/home'); // 动画完成后进行路由跳转
 };
 // 由于管理页面没有用到layout组件

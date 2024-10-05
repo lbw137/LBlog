@@ -80,7 +80,6 @@ defineProps({
   }
 });
 const handleClick = (id: number) => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
   $router.push('/details/' + id);
 };
 </script>

@@ -30,10 +30,6 @@ const current = computed(() => {
   return [path.value.split('/')[3]];
 });
 const onClick: MenuProps['onClick'] = ({ key }) => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
   $router.push((key as string).trim());
 };
 </script>

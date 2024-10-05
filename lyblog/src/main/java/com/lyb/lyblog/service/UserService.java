@@ -14,6 +14,6 @@ public class UserService extends ServiceImpl<UserMapper, User> {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<User>();
         queryWrapper.eq(User::getUsername, username);
         queryWrapper.eq(User::getPassword, password);
-        return this.getOne(queryWrapper);
+        return getOne(queryWrapper);
     }
 }

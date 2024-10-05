@@ -45,6 +45,7 @@
               type="primary"
               html-type="submit"
               style="margin-right: 2rem"
+              :loading="loading"
               >登陆</a-button
             >
             <a-button @click="resetForm">重置</a-button>
@@ -56,22 +57,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue';
+import { ref, reactive, Reactive } from 'vue';
 import { useRouter } from 'vue-router';
-import { reqLogin } from '../../api/user';
+import { reqLogin } from '@/api/admin/user';
+import type { loginForm } from '@/api/admin/user/type';
 const $router = useRouter();
 const formRef = ref();
-interface FormState {
-  username: string;
-  password: string;
-}
-const formState = reactive<FormState>({
+const loading = ref(false);
+const formState: Reactive<loginForm> = reactive({
   username: '',
   password: ''
 });
-const onFinish = async (values: FormState) => {
+const onFinish = async (values: loginForm) => {
+  loading.value = true;
   const res = await reqLogin(values);
-  if (res.success) $router.push('/home');
+  loading.value = false;
+  if (res.success) {
+    $router.push('/admin');
+  }
 };
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);

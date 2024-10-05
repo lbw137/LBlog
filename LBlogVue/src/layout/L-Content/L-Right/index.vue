@@ -33,21 +33,25 @@
         <TagsOutlined style="margin-right: 1rem" />标签云
       </template>
       <div class="tags">
-        <a-tag color="#f50">#f50</a-tag>
-        <a-tag color="#2db7f5">#2db7f5</a-tag>
-        <a-tag color="#87d068">#87d068</a-tag>
-        <a-tag color="#2fc">#2fc</a-tag>
-        <a-tag color="#f50">#f50</a-tag>
-        <a-tag color="#2db7f5">#2db7f5</a-tag>
-        <a-tag color="#87d068">#87d068</a-tag>
-        <a-tag color="#108ee9">#108ee9</a-tag>
+        <a-tag v-for="tag in tagList" :key="tag.id" :color="tag.color">{{
+          tag.title
+        }}</a-tag>
       </div>
     </a-card>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, Ref, onMounted } from 'vue';
+import { Tags } from '@/api/client/content/type';
+import { reqTags } from '@/api/client/content';
 import { BookOutlined, TagsOutlined } from '@ant-design/icons-vue';
+const tagList: Ref<Tags[]> = ref([]);
+onMounted(() => {
+  reqTags().then((res) => {
+    tagList.value = res.data.tags;
+  });
+});
 </script>
 
 <style scoped lang="scss">

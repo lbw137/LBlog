@@ -13,7 +13,11 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "preserve",
-
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,

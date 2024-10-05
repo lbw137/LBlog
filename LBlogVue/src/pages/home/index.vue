@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import request from '../../utils/request';
+import request from '@/utils/requestAdmin';
 const data = [
   {
     id: 1,
