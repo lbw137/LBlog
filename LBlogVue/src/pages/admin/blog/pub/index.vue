@@ -50,13 +50,13 @@
           <a-select
             v-model:value="formState.tags"
             :options="tagOptions"
-            :fieldNames="{ label: 'text', value: 'id' }"
+            :fieldNames="{ label: 'title', value: 'id' }"
             placeholder="请选择标签"
             :filter-option="filterOption"
             mode="multiple"
           >
-            <template #option="{ text }">
-              {{ text }}
+            <template #option="{ title }">
+              {{ title }}
             </template>
             <template #tagRender="{ option, closable, onClose }">
               <a-tag
@@ -65,14 +65,14 @@
                 @close="onClose"
                 :color="option.color"
               >
-                {{ option.text }}
+                {{ option.title }}
               </a-tag>
             </template>
           </a-select>
         </a-form-item>
         <!-- 状态 -->
         <a-form-item label="状态">
-          <a-row style="height: 3.2rem">
+          <a-row style="height: 3.2rem" :wrap="false">
             <a-form-item name="commendable" style="margin-right: 2rem">
               <a-checkbox v-model:checked="formState.commendable">
                 赞赏
@@ -98,9 +98,17 @@
         </a-form-item>
         <!-- 按钮 -->
         <a-form-item :wrapper-col="{ span: 24 }">
-          <a-row justify="end">
+          <a-row justify="end" wrap="false">
             <a-button type="primary" html-type="submit">发布</a-button>
-            <a-button @click="onSave" style="margin: 0 4rem"> 保存 </a-button>
+            <a-button @click="onSave" style="margin: 0 4%"> 保存 </a-button>
+            <a-button
+              @click="resetForm"
+              type="primary"
+              danger
+              style="margin-right: 4%"
+            >
+              重置
+            </a-button>
           </a-row>
         </a-form-item>
       </a-form>
@@ -109,10 +117,12 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import type { SelectProps } from 'ant-design-vue';
 import { MdEditor } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
+import type { Tag } from '@/api/client/siteInfo/type';
+import { reqTags } from '@/api/client/siteInfo';
 interface FormState {
   title: string; // 标题
   content: string; // 内容
@@ -145,6 +155,7 @@ const onFinish = (values: FormState) => {
 const onFinishFailed = (errorInfo: any) => {
   console.log(errorInfo);
 };
+// 保存
 const onSave = async () => {
   formRef.value
     .validate()
@@ -155,6 +166,12 @@ const onSave = async () => {
       console.log('error', error);
     });
 };
+
+// 重置
+const resetForm = () => {
+  formRef.value?.resetFields();
+};
+
 // 分类
 const catOptions = ref<SelectProps['options']>([
   {
@@ -168,26 +185,20 @@ const catOptions = ref<SelectProps['options']>([
 ]);
 
 // 标签
-const tagOptions = ref<SelectProps['options']>([
-  {
-    id: '1',
-    text: 'javascript',
-    color: '#f50'
-  },
-  {
-    id: '2',
-    text: 'vue',
-    color: '#2db7f5'
-  }
-]);
+const tagOptions = ref<Tag[]>([]);
 const filterOption = (input: string, option: any) => {
-  return option.text.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+  return option.title.toLowerCase().indexOf(input.toLowerCase()) >= 0;
 };
 
 // 封面
 const getCover = (file: File) => {
   formState.cover = file;
 };
+
+onMounted(async () => {
+  const res = await reqTags();
+  if (res.code === 200) tagOptions.value = res.data.tags;
+});
 </script>
 
 <style scoped lang="scss">

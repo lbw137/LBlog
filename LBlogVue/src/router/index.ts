@@ -21,26 +21,34 @@ export const routes: RouteRecordRaw[] = [
       {
         path: '/home',
         name: 'home',
-        component: () => import('@/pages/home/index.vue'),
+        component: () => import('@/pages/client/home/index.vue'),
         meta: {
           title: '首页',
           icon: HomeOutlined
         }
       },
       {
-        path: '/category',
+        path: '/category/:title',
         name: 'category',
-        redirect: '/category/studyNotes',
+        component: () => import('@/pages/client/category/index.vue'),
         meta: {
           title: '分类',
           icon: BulbOutlined
-        },
-        children: categories
+        }
+      },
+      {
+        path: '/tag/:title',
+        name: 'tag',
+        component: () => import('@/pages/client/tag/index.vue'),
+        meta: {
+          title: '标签',
+          isHidden: true
+        }
       },
       {
         path: '/archivist',
         name: 'archivist',
-        component: () => import('@/pages/archivist/index.vue'),
+        component: () => import('@/pages/client/archivist/index.vue'),
         meta: {
           title: '归档',
           icon: MailOutlined
@@ -49,7 +57,7 @@ export const routes: RouteRecordRaw[] = [
       {
         path: '/moments',
         name: 'moments',
-        component: () => import('@/pages/moments/index.vue'),
+        component: () => import('@/pages/client/moments/index.vue'),
         meta: {
           title: '动态',
           icon: MessageOutlined
@@ -58,7 +66,7 @@ export const routes: RouteRecordRaw[] = [
       {
         path: '/friends',
         name: 'friends',
-        component: () => import('@/pages/friends/index.vue'),
+        component: () => import('@/pages/client/friends/index.vue'),
         meta: {
           title: '友链',
           icon: SmileOutlined
@@ -67,7 +75,7 @@ export const routes: RouteRecordRaw[] = [
       {
         path: '/about',
         name: 'about',
-        component: () => import('@/pages/about/index.vue'),
+        component: () => import('@/pages/client/about/index.vue'),
         meta: {
           title: '关于我',
           icon: ManOutlined
@@ -76,7 +84,7 @@ export const routes: RouteRecordRaw[] = [
       {
         path: '/details/:id',
         name: 'details',
-        component: () => import('@/pages/details/index.vue'),
+        component: () => import('@/pages/client/details/index.vue'),
         meta: {
           isHidden: true
         }
@@ -90,8 +98,7 @@ export const routes: RouteRecordRaw[] = [
     component: () => import('@/pages/admin/index.vue'),
     meta: {
       title: '管理',
-      icon: SettingOutlined,
-      isHidden: true
+      icon: SettingOutlined
     },
     children: admins
   },

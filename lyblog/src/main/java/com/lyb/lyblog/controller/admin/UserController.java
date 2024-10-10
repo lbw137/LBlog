@@ -62,9 +62,9 @@ public class UserController {
             try {
                 Map<String, Claim> payload = JWTUtils.getPayload(token);
                 // 返回新token
-                String accessToken = JWTUtils.getAccessToken(payload.get("id").asLong(),
+                String accessToken = JWTUtils.getAccessToken(payload.get("id").asInt(),
                         payload.get("username").asString());
-                String refreshToken = JWTUtils.getRefreshToken(payload.get("id").asLong(),
+                String refreshToken = JWTUtils.getRefreshToken(payload.get("id").asInt(),
                         payload.get("username").asString());
                 return Result.ok().message("token刷新成功")
                         .data("access_token", accessToken).data("refresh_token", refreshToken);

@@ -11,5 +11,5 @@ const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate);
 
 const app = createApp(App);
-app.use(router).use(Antd).use(pinia).use(GlobalComponents);
+app.use(pinia).use(router).use(Antd).use(GlobalComponents);
 app.mount('#app');

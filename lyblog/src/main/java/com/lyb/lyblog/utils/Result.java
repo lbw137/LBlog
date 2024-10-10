@@ -4,15 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Result {
-    private int code;
+    private Integer code;
     private String message;
     private Map<String, Object> data = new HashMap<>();
 
-    public int getCode() {
+    public Integer getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(Integer code) {
         this.code = code;
     }
 
@@ -61,7 +61,7 @@ public class Result {
         return this;
     }
 
-    public Result code(int code) {
+    public Result code(Integer code) {
         this.code = code;
         return this;
     }

@@ -3,7 +3,11 @@
     <div class="conDiv" style="adminStyle">
       <LLeft class="left"></LLeft>
       <div class="route">
-        <router-view></router-view>
+        <router-view v-slot="{ Component }">
+          <keep-alive>
+            <component :is="Component" />
+          </keep-alive>
+        </router-view>
       </div>
       <LRight class="right"></LRight>
       <LBacktop></LBacktop>

@@ -20,7 +20,7 @@
       <div class="blog-list-content">
         <a-table
           :columns="columns"
-          :data-source="data"
+          :data-source="filterData"
           :pagination="Pagination"
           :scroll="{ x: true }"
         >
@@ -135,6 +135,21 @@ const data = ref([
     isPublish: false
   }
 ]);
+const filterData = computed(() => {
+  if (radioOption.value === 'all') {
+    return data.value;
+  } else if (radioOption.value === 'pubed') {
+    return data.value.filter((item: any) => {
+      return item.isPublish === true;
+    });
+  } else if (radioOption.value === 'unpub') {
+    return data.value.filter((item: any) => {
+      return item.isPublish === false;
+    });
+  }
+});
+
+// 分页
 const current = ref(1);
 const pageSize = ref(3);
 const Pagination = computed(() => ({

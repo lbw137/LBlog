@@ -194,6 +194,14 @@
     "@babel/helper-validator-identifier" "^7.24.7"
     to-fast-properties "^2.0.0"
 
+"@ckpack/vue-color@^1.6.0":
+  version "1.6.0"
+  resolved "https://registry.npmmirror.com/@ckpack/vue-color/-/vue-color-1.6.0.tgz"
+  integrity sha512-b9kFTKhYbNArfgP1lmnaVm0VNsWdZjqIbyHUYry7mZ+E7JeTQclbjq1+2xWn0SE3wzqRYlXmAVjECPOgteWmMQ==
+  dependencies:
+    "@ctrl/tinycolor" "^3.6.0"
+    material-colors "^1.2.6"
+
 "@codemirror/autocomplete@^6.0.0", "@codemirror/autocomplete@^6.3.2", "@codemirror/autocomplete@^6.7.1":
   version "6.18.1"
   resolved "https://registry.npmmirror.com/@codemirror/autocomplete/-/autocomplete-6.18.1.tgz"
@@ -516,7 +524,7 @@
     style-mod "^4.1.0"
     w3c-keyname "^2.2.4"
 
-"@ctrl/tinycolor@^3.4.0", "@ctrl/tinycolor@^3.5.0":
+"@ctrl/tinycolor@^3.4.0", "@ctrl/tinycolor@^3.5.0", "@ctrl/tinycolor@^3.6.0":
   version "3.6.1"
   resolved "https://registry.npmmirror.com/@ctrl/tinycolor/-/tinycolor-3.6.1.tgz"
   integrity sha512-SITSV6aIXsuVNV3f3O0f2n/cgyEDWoSqtZMYiAmcsYHydcKrOz3gUxB/iXd/Qf08+IZX4KpgNbvUdMBmWz+kcA==
@@ -1620,6 +1628,7 @@ knitwork@^1.1.0:
   resolved "file:"
   dependencies:
     "@ant-design/icons-vue" "^7.0.1"
+    "@ckpack/vue-color" "^1.6.0"
     animate.css "^4.1.1"
     ant-design-vue "^4.2.3"
     axios "^1.7.7"
@@ -1710,6 +1719,11 @@ markdown-it@*, markdown-it@^14.0.0:
     mdurl "^2.0.0"
     punycode.js "^2.3.1"
     uc.micro "^2.1.0"
+
+material-colors@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.npmmirror.com/material-colors/-/material-colors-1.2.6.tgz"
+  integrity sha512-6qE4B9deFBIa9YSpOc9O0Sgc43zTeVYbgDT5veRKSlB2+ZuHNoVVxA1L/ckMUayV9Ay9y7Z/SZCLcGteW9i7bg==
 
 md-editor-v3@^4.20.2:
   version "4.20.2"

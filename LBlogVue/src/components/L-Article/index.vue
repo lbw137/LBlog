@@ -1,21 +1,22 @@
 <template>
   <div class="l-article">
     <ul>
-      <li v-for="item in data" :key="item.date">
+      <li v-for="item in data" :key="item.id">
         <a-badge-ribbon
-          :text="item.category"
+          :text="item.category.title"
           placement="start"
           style="top: 8rem"
+          color="item.category.color"
         >
           <a-card>
-            <h1 class="title">
+            <h1 class="title" @click="onTitleClick(item)">
               {{ item.title }}
             </h1>
             <a-space class="info" size="middle">
               <span class="date">
                 <a-space>
                   <CalendarFilled />
-                  {{ item.date }}
+                  {{ dayjs(item.createTime).format('YYYY-MM-DD') }}
                 </a-space>
               </span>
               <span class="views">
@@ -33,19 +34,20 @@
               <span>
                 <a-space>
                   <ClockCircleFilled />
-                  阅读时长≈{{ item.time }}分
+                  阅读时长≈{{ item.readTime }}分
                 </a-space>
               </span>
             </a-space>
             <p>
-              <a-image :src="item.img" />
+              <a-image :src="item.cover" />
               <LButton @click="handleClick(item.id)">阅读全文</LButton>
             </p>
             <div class="footer">
               <l-tag
                 v-for="tag in item.tags"
-                :text="tag[0]"
-                :color="tag[1]"
+                :text="tag.title"
+                :color="tag.color"
+                @click="onTagClick(tag)"
               ></l-tag>
             </div>
           </a-card>
@@ -63,24 +65,29 @@ import {
   ClockCircleFilled
 } from '@ant-design/icons-vue';
 import { useRouter } from 'vue-router';
+import type { BlogList } from '@/api/client/blog/type';
+import { Tag } from '@/api/client/siteInfo/type';
+import dayjs from 'dayjs';
 const $router = useRouter();
 defineProps({
   data: {
-    type: Array as () => {
-      id: number;
-      title: string;
-      date: string;
-      views: number;
-      letters: number;
-      time: number;
-      img: string;
-      tags: [string, string][];
-      category: string;
-    }[]
+    type: Array<BlogList>
   }
 });
 const handleClick = (id: number) => {
   $router.push('/details/' + id);
+};
+const onTitleClick = (item: BlogList) => {
+  $router.push('/details/' + item.id);
+};
+const onTagClick = (tag: Tag) => {
+  $router.push({
+    path: `/tag/${tag.title}`,
+    query: {
+      id: tag.id,
+      color: tag.color
+    }
+  });
 };
 </script>
 

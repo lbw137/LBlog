@@ -33,24 +33,38 @@
         <TagsOutlined style="margin-right: 1rem" />标签云
       </template>
       <div class="tags">
-        <a-tag v-for="tag in tagList" :key="tag.id" :color="tag.color">{{
-          tag.title
-        }}</a-tag>
+        <a-tag
+          v-for="tag in tagList"
+          :key="tag.id"
+          :color="tag.color"
+          @click="onTagClick(tag)"
+        >
+          {{ tag.title }}
+        </a-tag>
       </div>
     </a-card>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, Ref, onMounted } from 'vue';
-import { Tags } from '@/api/client/content/type';
-import { reqTags } from '@/api/client/content';
+import { Tag } from '@/api/client/siteInfo/type';
 import { BookOutlined, TagsOutlined } from '@ant-design/icons-vue';
-const tagList: Ref<Tags[]> = ref([]);
-onMounted(() => {
-  reqTags().then((res) => {
-    tagList.value = res.data.tags;
+import { useRouter } from 'vue-router';
+import { ref, onMounted } from 'vue';
+import { reqTags } from '@/api/client/siteInfo';
+const $router = useRouter();
+const tagList = ref<Tag[]>([]);
+const onTagClick = (tag: Tag) => {
+  $router.push({
+    path: `/tag/${tag.title}`,
+    query: { id: tag.id, color: tag.color }
   });
+};
+onMounted(async () => {
+  const res = await reqTags();
+  if (res.code === 200) {
+    tagList.value = res.data.tags;
+  }
 });
 </script>
 

@@ -8,7 +8,11 @@
         <a-menu-item key="list"> 列表 </a-menu-item>
         <a-menu-item key="pub"> 发布 </a-menu-item>
       </a-menu>
-      <router-view></router-view>
+      <router-view v-slot="{ Component }">
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+      </router-view>
     </div>
     <!-- 底部区域 -->
     <LFooter></LFooter>

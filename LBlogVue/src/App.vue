@@ -2,9 +2,7 @@
   <a-config-provider :locale="locale">
     <div>
       <router-view v-slot="{ Component }">
-        <keep-alive>
-          <component :is="Component" />
-        </keep-alive>
+        <component :is="Component" />
       </router-view>
       <l-mouse v-if="$store.mouseEffect"></l-mouse>
     </div>

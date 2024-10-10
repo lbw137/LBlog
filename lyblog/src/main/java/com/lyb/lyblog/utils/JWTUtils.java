@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class JWTUtils {
     private static final String SIGNATURE = "loyalBlog";
-    private static final int ACCESS_TOKEN_EXPIRES_IN = 2; // 访问令牌过期时间1小时
-    private static final int REFRESH_TOKEN_EXPIRES_IN = 3600 * 24; // 刷新令牌过期时间1天
+    private static final Integer ACCESS_TOKEN_EXPIRES_IN = 2; // 访问令牌过期时间1小时
+    private static final Integer REFRESH_TOKEN_EXPIRES_IN = 3600 * 24; // 刷新令牌过期时间1天
 
     /**
      * 获取访问令牌.
@@ -20,7 +20,7 @@ public class JWTUtils {
      * @param username 用户名
      * @return 生成的访问令牌
      */
-    public static String getAccessToken(Long id, String username) {
+    public static String getAccessToken(Integer id, String username) {
         return buildToken(id, username, ACCESS_TOKEN_EXPIRES_IN);
     }
 
@@ -31,11 +31,11 @@ public class JWTUtils {
      * @param username 用户名
      * @return 生成的刷新令牌
      */
-    public static String getRefreshToken(Long id, String username) {
+    public static String getRefreshToken(Integer id, String username) {
         return buildToken(id, username, REFRESH_TOKEN_EXPIRES_IN);
     }
 
-    private static String buildToken(Long id, String username, int expiresIn) {
+    private static String buildToken(Integer id, String username, Integer expiresIn) {
         Instant expiryDate = Instant.now().plusSeconds(expiresIn);
         return JWT.create()
                 .withClaim("id", id)

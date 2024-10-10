@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { useStore } from '@/store';
-const $store = useStore();
 let admin = axios.create({
   // 基础路径
   baseURL: import.meta.env.VITE_APP_CLIENT_API,
@@ -17,8 +15,8 @@ admin.interceptors.request.use((config) => {
 // 响应拦截器
 admin.interceptors.response.use(
   async (res) => {
-    // 返回简化数据
-    return res.data;
+    if (res.data.code === 200) return res.data;
+    else return Promise.reject(res.data);
   },
   (err) => {
     return Promise.reject(err);

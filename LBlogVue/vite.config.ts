@@ -28,6 +28,10 @@ export default defineConfig({
         target: 'http://localhost:5174',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/client/, '')
+      },
+      '/static': {
+        target: 'http://localhost:5174',
+        changeOrigin: true
       }
     }
   }
