@@ -2,7 +2,6 @@ import axios from 'axios';
 import { message } from 'ant-design-vue';
 import { useStore } from '@/store';
 import { refreshToken, isRefreshRequest } from './refreshToken';
-const $store = useStore();
 let admin = axios.create({
   // 基础路径
   baseURL: import.meta.env.VITE_APP_ADMIN_API,
@@ -12,10 +11,12 @@ let admin = axios.create({
 
 // 请求拦截器
 admin.interceptors.request.use((config) => {
-  if (config.url !== 'user/login' && config.url != 'user/refreshToken') {
-    // 添加短token
-    config.headers.Authorization = 'Bearer ' + $store.access_token;
+  const $store = useStore();
+  if (config.url === 'user/login' || config.url === 'user/refreshToken') {
+    return config;
   }
+  // 添加短token
+  config.headers.Authorization = 'Bearer ' + $store.access_token;
   // 返回配置对象
   return config;
 });
@@ -23,9 +24,8 @@ admin.interceptors.request.use((config) => {
 // 响应拦截器
 admin.interceptors.response.use(
   async (res) => {
+    const $store = useStore();
     if (res.data.code === 200) {
-      // 如果是刷新token的请求，不提示消息
-      if (!isRefreshRequest(res.config)) message.success(res.data.message);
       // 收集短token
       if (res.data.data.access_token) {
         $store.access_token = res.data.data.access_token;

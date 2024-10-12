@@ -2,66 +2,24 @@
   <a-card>
     <div class="header">
       <h1>文章归档</h1>
-      <span>好！目前共计{{ data.count }}篇博客，继续努力。</span>
+      <span>好！目前共计{{ data?.count }}篇博客，继续努力。</span>
     </div>
-    <l-timeline :data="data.blogMap"></l-timeline>
+    <l-timeline :data="data?.blogMap" @click="onclick"></l-timeline>
   </a-card>
 </template>
 
 <script setup lang="ts">
-const data = {
-  count: 5,
-  blogMap: [
-    {
-      date: '2024年9月',
-      blogs: [
-        { day: '22日', title: 'Vue3知识点' },
-        { day: '10日', title: '博客项目，启动启动启动启动启动启动' }
-      ]
-    },
-    {
-      date: '2024年9月',
-      blogs: [
-        { day: '22日', title: 'Vue3知识点' },
-        { day: '10日', title: '博客项目，启动' }
-      ]
-    },
-    {
-      date: '2024年9月',
-      blogs: [
-        { day: '22日', title: 'Vue3知识点' },
-        { day: '10日', title: '博客项目，启动' }
-      ]
-    },
-    {
-      date: '2024年9月',
-      blogs: [
-        { day: '22日', title: 'Vue3知识点' },
-        { day: '10日', title: '博客项目，启动' }
-      ]
-    },
-    {
-      date: '2024年9月',
-      blogs: [
-        { day: '22日', title: 'Vue3知识点' },
-        { day: '10日', title: '博客项目，启动' }
-      ]
-    },
-    {
-      date: '2024年9月',
-      blogs: [
-        { day: '22日', title: '啊十大十大科技' },
-        { day: '10日', title: '博客项目，启动' }
-      ]
-    },
-    {
-      date: '2024年9月',
-      blogs: [
-        { day: '22日', title: '啊十大十大科技' },
-        { day: '10日', title: '博客项目，启动' }
-      ]
-    }
-  ]
+import { useSiteInfo } from '@/store/useSiteInfo';
+import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router';
+const $site = useSiteInfo();
+const $router = useRouter();
+const data = storeToRefs($site).blogsArcInfo;
+if (!data.value) {
+  $site.getBlogsArcInfo();
+}
+const onclick = (id: number) => {
+  $router.push('/detail/' + id);
 };
 </script>
 

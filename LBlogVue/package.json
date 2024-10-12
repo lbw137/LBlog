@@ -17,6 +17,7 @@
     "axios": "^1.7.7",
     "jquery": "^3.7.1",
     "lblogvue": "file:",
+    "markdown-it-link-attributes": "^4.0.1",
     "md-editor-v3": "^4.20.2",
     "pinia": "^2.2.2",
     "pinia-plugin-persistedstate": "^4.0.2",

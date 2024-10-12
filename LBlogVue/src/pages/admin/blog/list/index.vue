@@ -33,10 +33,21 @@
           </template>
 
           <template #bodyCell="{ column, record }">
+            <template v-if="column.key === 'createTime'">
+              {{ dayjs(record.createTime).format('YYYY-MM-DD HH:mm:ss') }}
+            </template>
+            <template v-if="column.key === 'updateTime'">
+              {{ dayjs(record.updateTime).format('YYYY-MM-DD HH:mm:ss') }}
+            </template>
+            <template v-if="column.key === 'category'">
+              <a-tag :color="record.category?.color">
+                {{ record.category?.title }}
+              </a-tag>
+            </template>
             <template v-if="column.key === 'isPublish'">
               <a-switch v-model:checked="record.isPublish"></a-switch>
             </template>
-            <template v-else-if="column.key === 'action'">
+            <template v-if="column.key === 'action'">
               <a-tooltip title="编辑" color="blue">
                 <a-button
                   type="primary"
@@ -72,6 +83,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { message } from 'ant-design-vue';
+import { useSiteInfo } from '@/store/useSiteInfo';
+import { storeToRefs } from 'pinia';
+import dayjs from 'dayjs';
+const $site = useSiteInfo();
 const confirm = (record: any) => {
   console.log(record);
   data.value.splice(data.value.indexOf(record), 1);
@@ -109,6 +124,11 @@ const columns = [
     key: 'updateTime'
   },
   {
+    title: '所属分类',
+    dataIndex: 'category',
+    key: 'category'
+  },
+  {
     title: '是否发布',
     dataIndex: 'isPublish',
     key: 'isPublish'
@@ -119,22 +139,10 @@ const columns = [
   }
 ];
 
-const data = ref([
-  {
-    id: '1',
-    title: 'Vue3知识点',
-    createTime: '2021-09-06',
-    updateTime: '2021-09-07',
-    isPublish: true
-  },
-  {
-    id: '2',
-    title: '马德胜不为人知的小秘密',
-    createTime: '2021-09-09',
-    updateTime: '2021-09-10',
-    isPublish: false
-  }
-]);
+const data = storeToRefs($site).blogsAdInfo;
+if (data.value.length === 0) {
+  $site.getBlogsAdInfo();
+}
 const filterData = computed(() => {
   if (radioOption.value === 'all') {
     return data.value;

@@ -8,14 +8,15 @@
             placeholder="请输入标签标题"
             size="large"
             style="width: 50%"
-            @search=""
+            v-model:value="inputValue"
+            @search="onSearch"
           />
         </div>
       </div>
       <div class="tag-list-content">
         <a-table
           :columns="columns"
-          :data-source="tagList"
+          :data-source="searchfilter"
           :pagination="Pagination"
           :scroll="{ x: true }"
         >
@@ -66,13 +67,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 import { message } from 'ant-design-vue';
-import type { Tag } from '@/api/client/siteInfo/type';
 import { useRouter } from 'vue-router';
-import { reqTags } from '@/api/client/siteInfo';
+import { useSiteInfo } from '@/store/useSiteInfo';
+import { storeToRefs } from 'pinia';
+import { Tag } from '@/api/client/siteInfo/type';
+import { reqTagDel } from '@/api/admin/tag';
+const $site = useSiteInfo();
 const $router = useRouter();
-const onEdit = (record: any) => {
+const onEdit = (record: Tag) => {
   $router.push({
     path: '/adm/tag/pub',
     query: {
@@ -83,20 +87,23 @@ const onEdit = (record: any) => {
   });
 };
 
-const confirm = (record: any) => {
-  console.log(record);
-  tagList.value.splice(tagList.value.indexOf(record), 1);
-  message.success({
-    content: '删除成功',
-    style: {
-      marginTop: '10vh'
-    }
-  });
+const confirm = async (record: Tag) => {
+  const res = await reqTagDel(record.id);
+  if (res.code === 200) {
+    // 刷新标签列表
+    $site.getTagsInfo();
+    // 刷新博客列表
+    $site.getBlogsInfo();
+    message.success({
+      content: res.message,
+      style: {
+        marginTop: '10vh'
+      }
+    });
+  }
 };
 
-const cancel = (e: MouseEvent) => {
-  console.log(e);
-};
+const cancel = (e: MouseEvent) => {};
 const columns = [
   {
     name: 'ID',
@@ -118,7 +125,27 @@ const columns = [
     key: 'action'
   }
 ];
-const tagList = ref<Tag[]>([]);
+const tagList = storeToRefs($site).tagsInfo;
+const searchfilter = computed(() => {
+  if (inputValue.value === '') {
+    searchValue.value = '';
+    return tagList.value;
+  }
+  return tagList.value.filter((item) => {
+    if (item.title.toLowerCase().indexOf(searchValue.value.toLowerCase()) >= 0)
+      return true;
+    return false;
+  });
+});
+// 用于在清空搜索框时，重置搜索结果
+const inputValue = ref('');
+// 按下搜索时，将输入的值赋值给searchValue
+const searchValue = ref('');
+const onSearch = (value: string) => {
+  searchValue.value = value;
+};
+
+// 分页
 const current = ref(1);
 const pageSize = ref(5);
 const Pagination = computed(() => ({
@@ -129,12 +156,6 @@ const Pagination = computed(() => ({
   current: current.value,
   showTotal: (total: number) => `共 ${total} 条记录`
 }));
-onMounted(async () => {
-  const res = await reqTags();
-  if (res.code === 200) {
-    tagList.value = res.data.tags;
-  }
-});
 </script>
 
 <style scoped lang="scss">
@@ -171,8 +192,6 @@ onMounted(async () => {
           text-wrap: nowrap;
         }
       }
-    }
-    .tag-list-content {
     }
   }
 }

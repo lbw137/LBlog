@@ -43,7 +43,7 @@
         </a-collapse-panel>
       </a-collapse>
     </a-card>
-    <a-card style="margin-top: 2rem" v-if="isDetails">
+    <a-card class="catalog" v-if="isDetail">
       <template #title>
         <ProfileOutlined style="margin-right: 1rem" />目录
       </template>
@@ -52,7 +52,7 @@
         :scrollElement="scrollElement"
         style="padding: 1%"
         :offsetTop="65"
-        :scrollElementOffsetTop="65"
+        :scrollElementOffsetTop="60"
       />
     </a-card>
   </div>
@@ -67,17 +67,16 @@ import 'md-editor-v3/lib/preview.css';
 const $route = useRoute();
 const activeKey = ref(['0']);
 const scrollElement = document.documentElement;
-const isDetails = computed(() => {
-  return $route.path.includes('details');
+const isDetail = computed(() => {
+  return $route.path.includes('detail');
 });
 </script>
 
 <style scoped lang="scss">
 .left {
   width: 20%;
-  overflow: hidden;
   border-radius: 3%;
-
+  align-self: stretch;
   h1 {
     margin-top: 0 !important;
     margin-bottom: 1rem;
@@ -98,6 +97,11 @@ const isDetails = computed(() => {
         font-weight: 300;
       }
     }
+  }
+  .catalog {
+    margin-top: 2rem;
+    position: sticky;
+    top: 8.5rem;
   }
 }
 </style>

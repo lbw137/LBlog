@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import categories from './category';
 import admins from './admin';
 import {
   HomeOutlined,
@@ -82,9 +81,9 @@ export const routes: RouteRecordRaw[] = [
         }
       },
       {
-        path: '/details/:id',
-        name: 'details',
-        component: () => import('@/pages/client/details/index.vue'),
+        path: '/detail/:id',
+        name: 'detail',
+        component: () => import('@/pages/client/detail/index.vue'),
         meta: {
           isHidden: true
         }

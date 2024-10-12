@@ -4,9 +4,7 @@
       <LLeft class="left"></LLeft>
       <div class="route">
         <router-view v-slot="{ Component }">
-          <keep-alive>
-            <component :is="Component" />
-          </keep-alive>
+          <component :is="Component" />
         </router-view>
       </div>
       <LRight class="right"></LRight>

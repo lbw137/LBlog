@@ -2,7 +2,6 @@
 import admin from '@/utils/requestAdmin';
 import type { loginForm, loginRes } from './type';
 import { useStore } from '@/store';
-const $store = useStore();
 enum API {
   LOGIN_URL = 'user/login',
   REFRESH_TOKEN = 'user/refreshToken'
@@ -13,6 +12,7 @@ export const reqLogin = (data: loginForm) => {
 };
 // 刷新短token接口
 export const reqRefreshToken = () => {
+  const $store = useStore();
   return admin.get<any, loginRes>(API.REFRESH_TOKEN, {
     headers: {
       Authorization: 'Bearer ' + $store.refresh_token,

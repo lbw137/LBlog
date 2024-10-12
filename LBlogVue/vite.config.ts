@@ -21,13 +21,11 @@ export default defineConfig({
     proxy: {
       '/admin': {
         target: 'http://localhost:5174',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/admin/, '')
+        changeOrigin: true
       },
       '/client': {
         target: 'http://localhost:5174',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/client/, '')
+        changeOrigin: true
       },
       '/static': {
         target: 'http://localhost:5174',

@@ -228,14 +228,6 @@ onMounted(async () => {
     .ant-form {
       padding: 2rem;
     }
-    .markdown {
-      :deep(ol) {
-        list-style: decimal;
-      }
-      :deep(ul) {
-        list-style: disc;
-      }
-    }
   }
 }
 </style>

@@ -1,10 +1,10 @@
 <template>
   <a-card>
-    <l-icon icon="icon-sakura-flower"></l-icon>
+    <l-icon icon="icon-sakura-flower" :scale="3"></l-icon>
     标签
     <span :style="color">{{ $route.params.title }}</span>
     下的文章
-    <l-icon icon="icon-sakura-flower"></l-icon>
+    <l-icon icon="icon-sakura-flower" :scale="3"></l-icon>
   </a-card>
   <l-article :data="data"></l-article>
 </template>
@@ -17,12 +17,12 @@ import { useRoute } from 'vue-router';
 const $route = useRoute();
 const color = computed(() => `color: ${$route.query.color};`);
 const data = ref<BlogList[]>([]);
+const getData = async () => {
+  const res = await reqTagBlogs(Number($route.query.id));
+  if (res.code === 200) data.value = res.data.blogs;
+};
 watchEffect(async () => {
-  if ($route.query.id) {
-    const res = await reqTagBlogs(Number($route.query.id));
-    if (res.code === 200) data.value = res.data.blogs;
-    else return [];
-  }
+  if ($route.query.id) getData();
 });
 </script>
 

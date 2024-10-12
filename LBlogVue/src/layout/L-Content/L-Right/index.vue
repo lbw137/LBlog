@@ -50,22 +50,17 @@
 import { Tag } from '@/api/client/siteInfo/type';
 import { BookOutlined, TagsOutlined } from '@ant-design/icons-vue';
 import { useRouter } from 'vue-router';
-import { ref, onMounted } from 'vue';
-import { reqTags } from '@/api/client/siteInfo';
+import { useSiteInfo } from '@/store/useSiteInfo';
+import { storeToRefs } from 'pinia';
+const $site = useSiteInfo();
 const $router = useRouter();
-const tagList = ref<Tag[]>([]);
+const tagList = storeToRefs($site).tagsInfo;
 const onTagClick = (tag: Tag) => {
   $router.push({
     path: `/tag/${tag.title}`,
     query: { id: tag.id, color: tag.color }
   });
 };
-onMounted(async () => {
-  const res = await reqTags();
-  if (res.code === 200) {
-    tagList.value = res.data.tags;
-  }
-});
 </script>
 
 <style scoped lang="scss">

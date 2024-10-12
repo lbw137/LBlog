@@ -200,3 +200,14 @@
     }
   }
 }
+
+// markdown插件的列表样式覆盖
+.md-preview,
+.markdown {
+  ol {
+    list-style: decimal;
+  }
+  ul {
+    list-style: disc;
+  }
+}

@@ -3,16 +3,10 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { reqHomeBlogs } from '@/api/client/blog';
-import type { BlogList } from '@/api/client/blog/type';
-const data = ref<BlogList[]>([]);
-onMounted(async () => {
-  const res = await reqHomeBlogs();
-  if (res.code === 200) {
-    data.value = res.data.blogs;
-  }
-});
+import { useSiteInfo } from '@/store/useSiteInfo';
+import { storeToRefs } from 'pinia';
+const $site = useSiteInfo();
+const data = storeToRefs($site).blogsInfo;
 </script>
 
 <style scoped></style>

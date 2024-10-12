@@ -33,8 +33,6 @@
         </a-form-item>
       </template>
     </a-comment>
-    <!-- 评论数量 -->
-    <slot></slot>
     <!-- 评论列表 -->
     <a-list
       class="comment-list"

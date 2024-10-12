@@ -61,6 +61,7 @@ import { ref, reactive, Reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { reqLogin } from '@/api/admin/user';
 import type { loginForm } from '@/api/admin/user/type';
+import { message } from 'ant-design-vue';
 const $router = useRouter();
 const formRef = ref();
 const loading = ref(false);
@@ -73,7 +74,8 @@ const onFinish = async (values: loginForm) => {
   const res = await reqLogin(values);
   loading.value = false;
   if (res.code === 200) {
-    $router.push('/admin');
+    $router.push('/adm');
+    message.success({ content: '登陆成功' });
   }
 };
 const onFinishFailed = (errorInfo: any) => {

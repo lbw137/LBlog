@@ -53,9 +53,15 @@
 <script setup lang="ts">
 import { reactive, ref, watchEffect } from 'vue';
 import { Chrome } from '@ckpack/vue-color';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
+import { CategoryRes } from '@/api/admin/category/type';
+import { Category } from '@/api/client/siteInfo/type';
+import { reqCatPub, reqCatUpd } from '@/api/admin/category';
+import { useSiteInfo } from '@/store/useSiteInfo';
+import { message } from 'ant-design-vue';
+const $site = useSiteInfo();
 const $route = useRoute();
-
+const $router = useRouter();
 interface FormState {
   title: string; // 标题
   color: any; // 颜色
@@ -65,8 +71,27 @@ const formState = reactive<FormState>({
   color: ''
 });
 const formRef = ref();
-const onFinish = (values: FormState) => {
-  console.log(values);
+const onFinish = async (values: FormState) => {
+  let res: CategoryRes;
+  const tag: Category = {
+    id: Number($route.query.id),
+    ...values
+  };
+  if ($route.query.id) {
+    // 更新
+    res = await reqCatUpd(tag);
+  } else {
+    // 发布
+    res = await reqCatPub(tag);
+  }
+  if (res.code === 200) {
+    $site.getMenuCatInfo();
+    $site.getBlogsInfo();
+    message.success(res.message);
+    $router.push('/adm/category/list');
+  } else {
+    message.error(res.message);
+  }
 };
 const onFinishFailed = (errorInfo: any) => {
   console.log(errorInfo);

@@ -2,56 +2,63 @@
   <div class="l-article">
     <ul>
       <li v-for="item in data" :key="item.id">
-        <a-badge-ribbon
-          :text="item.category.title"
-          placement="start"
-          style="top: 8rem"
-          color="item.category.color"
-        >
-          <a-card>
-            <h1 class="title" @click="onTitleClick(item)">
-              {{ item.title }}
-            </h1>
-            <a-space class="info" size="middle">
-              <span class="date">
-                <a-space>
-                  <CalendarFilled />
-                  {{ dayjs(item.createTime).format('YYYY-MM-DD') }}
-                </a-space>
-              </span>
-              <span class="views">
-                <a-space>
-                  <EyeFilled />
-                  {{ item.views }}
-                </a-space>
-              </span>
-              <span>
-                <a-space>
-                  <EditFilled />
-                  字数≈{{ item.letters }}字
-                </a-space>
-              </span>
-              <span>
-                <a-space>
-                  <ClockCircleFilled />
-                  阅读时长≈{{ item.readTime }}分
-                </a-space>
-              </span>
-            </a-space>
-            <p>
-              <a-image :src="item.cover" />
-              <LButton @click="handleClick(item.id)">阅读全文</LButton>
-            </p>
-            <div class="footer">
-              <l-tag
-                v-for="tag in item.tags"
-                :text="tag.title"
-                :color="tag.color"
-                @click="onTagClick(tag)"
-              ></l-tag>
-            </div>
-          </a-card>
-        </a-badge-ribbon>
+        <a-card>
+          <!-- 标题 -->
+          <h1 class="title" @click="onTitleClick(item)">
+            {{ item.title }}
+          </h1>
+          <!-- 信息 -->
+          <a-space class="info" size="middle">
+            <span class="date">
+              <a-space>
+                <CalendarFilled />
+                {{ dayjs(item.createTime).format('YYYY-MM-DD') }}
+              </a-space>
+            </span>
+            <span class="views">
+              <a-space>
+                <EyeFilled />
+                {{ item.views }}
+              </a-space>
+            </span>
+            <span>
+              <a-space>
+                <EditFilled />
+                字数≈{{ item.letters }}字
+              </a-space>
+            </span>
+            <span>
+              <a-space>
+                <ClockCircleFilled />
+                阅读时长≈{{ item.readTime }}分
+              </a-space>
+            </span>
+          </a-space>
+          <!-- 分类 -->
+          <div
+            class="category"
+            :style="{
+              '--catColor': item.category.color
+            }"
+            @click="onCatClick(item.category)"
+          >
+            {{ item.category.title }}
+          </div>
+          <!-- 图片+按钮 -->
+          <p>
+            <a-image :src="item.cover" />
+            <LButton @click="handleClick(item.id)">阅读全文</LButton>
+          </p>
+          <!-- 标签 -->
+          <div class="footer">
+            <l-tag
+              v-for="tag in item.tags"
+              :text="tag.title"
+              :color="tag.color"
+              @click="onTagClick(tag)"
+            ></l-tag>
+          </div>
+        </a-card>
       </li>
     </ul>
   </div>
@@ -75,10 +82,10 @@ defineProps({
   }
 });
 const handleClick = (id: number) => {
-  $router.push('/details/' + id);
+  $router.push('/detail/' + id);
 };
 const onTitleClick = (item: BlogList) => {
-  $router.push('/details/' + item.id);
+  $router.push('/detail/' + item.id);
 };
 const onTagClick = (tag: Tag) => {
   $router.push({
@@ -89,9 +96,18 @@ const onTagClick = (tag: Tag) => {
     }
   });
 };
+const onCatClick = (category: Tag) => {
+  $router.push({
+    path: `/category/${category.title}`,
+    query: {
+      id: category.id,
+      color: category.color
+    }
+  });
+};
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 li {
   margin-bottom: 4rem;
   .ant-card {
@@ -107,7 +123,6 @@ li {
         transform: scale(1.1);
       }
     }
-
     .info {
       display: flex;
       flex-wrap: wrap;
@@ -123,7 +138,30 @@ li {
         text-wrap: nowrap;
       }
     }
-
+    .category {
+      position: absolute;
+      user-select: none;
+      color: #fff;
+      padding: 0 0.5rem;
+      border-radius: 0.3rem;
+      border-bottom-left-radius: 0;
+      font-size: 1.5rem;
+      left: -1rem;
+      background-color: var(--catColor);
+      &:hover {
+        box-shadow: $tag-shadow;
+      }
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0rem;
+        bottom: -0.9rem;
+        border: 0.5rem solid var(--catColor);
+        filter: brightness(90%);
+        border-left-color: transparent;
+        border-bottom-color: transparent;
+      }
+    }
     p {
       margin-top: 3rem;
       border-bottom: 2px solid #dededf;

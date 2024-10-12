@@ -6,7 +6,7 @@
         <div class="l-tl-blog" v-for="blog in item.blogs">
           <span>{{ blog.day }}</span>
           <div class="l-tl-con">
-            <div class="l-tl-title">
+            <div class="l-tl-title" @click="onclick(blog.id)">
               <p>{{ blog.title }}</p>
             </div>
           </div>
@@ -17,11 +17,17 @@
 </template>
 
 <script setup lang="ts">
+import { BlogArcMap } from '@/api/client/blog/type';
 defineProps({
   data: {
-    type: Object
+    type: Array<BlogArcMap>,
+    required: true
   }
 });
+const emit = defineEmits(['click']);
+const onclick = (id: number) => {
+  emit('click', id);
+};
 </script>
 
 <style scoped lang="scss">

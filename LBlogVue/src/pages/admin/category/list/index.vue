@@ -8,14 +8,15 @@
             placeholder="请输入分类标题"
             size="large"
             style="width: 50%"
-            @search=""
+            v-model:value="inputValue"
+            @search="onSearch"
           />
         </div>
       </div>
       <div class="category-list-content">
         <a-table
           :columns="columns"
-          :data-source="categoryList"
+          :data-source="searchfilter"
           :pagination="Pagination"
           :scroll="{ x: true }"
         >
@@ -66,11 +67,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 import { message } from 'ant-design-vue';
-import type { Category } from '@/api/client/siteInfo/type';
 import { useRouter } from 'vue-router';
-import { reqCategories } from '@/api/client/siteInfo';
+import { useSiteInfo } from '@/store/useSiteInfo';
+import { storeToRefs } from 'pinia';
+import { Category } from '@/api/client/siteInfo/type';
+import { reqCatDel } from '@/api/admin/category';
+const $site = useSiteInfo();
 const $router = useRouter();
 const onEdit = (record: any) => {
   $router.push({
@@ -83,15 +87,20 @@ const onEdit = (record: any) => {
   });
 };
 
-const confirm = (record: any) => {
-  console.log(record);
-  categoryList.value.splice(categoryList.value.indexOf(record), 1);
-  message.success({
-    content: '删除成功',
-    style: {
-      marginTop: '10vh'
-    }
-  });
+const confirm = async (record: Category) => {
+  const res = await reqCatDel(record.id);
+  if (res.code === 200) {
+    // 刷新菜单分类信息
+    $site.getMenuCatInfo();
+    // 刷新博客列表
+    $site.getBlogsInfo();
+    message.success({
+      content: res.message,
+      style: {
+        marginTop: '10vh'
+      }
+    });
+  }
 };
 
 const cancel = (e: MouseEvent) => {
@@ -118,7 +127,27 @@ const columns = [
     key: 'action'
   }
 ];
-const categoryList = ref<Category[]>([]);
+const categoryList = storeToRefs($site).categoriesInfo;
+const searchfilter = computed(() => {
+  if (inputValue.value === '') {
+    searchValue.value = '';
+    return categoryList.value;
+  }
+  return categoryList.value.filter((item) => {
+    if (item.title.toLowerCase().indexOf(searchValue.value.toLowerCase()) >= 0)
+      return true;
+    return false;
+  });
+});
+// 用于在清空搜索框时，重置搜索结果
+const inputValue = ref('');
+// 按下搜索时，将输入的值赋值给searchValue
+const searchValue = ref('');
+const onSearch = (value: string) => {
+  searchValue.value = value;
+};
+
+// 分页
 const current = ref(1);
 const pageSize = ref(5);
 const Pagination = computed(() => ({
@@ -129,13 +158,6 @@ const Pagination = computed(() => ({
   current: current.value,
   showTotal: (total: number) => `共 ${total} 条记录`
 }));
-onMounted(async () => {
-  const res = await reqCategories();
-  console.log(666);
-  if (res.code === 200) {
-    categoryList.value = res.data.categories;
-  }
-});
 </script>
 
 <style scoped lang="scss">

@@ -20,13 +20,13 @@ public class Blogs {
     @TableField("read_time")
     Integer readTime;
     @TableField("is_review")
-    boolean isReview;
+    Boolean isReview;
     @TableField("is_publish")
-    boolean isPublish;
+    Boolean isPublish;
     @TableField("is_commend")
-    boolean isCommend;
+    Boolean isCommend;
     @TableField("is_top")
-    boolean isTop;
+    Boolean isTop;
     @TableField("create_time")
     LocalDateTime createTime;
     @TableField("publish_time")

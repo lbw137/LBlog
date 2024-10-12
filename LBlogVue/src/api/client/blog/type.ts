@@ -53,14 +53,38 @@ export interface BlogDetail {
 export interface BlogArchive {
   id: number;
   title: string;
-  createTime: Date;
+  day: string;
+}
+export interface BlogArcMap {
+  date: string;
+  blogs: BlogArchive[];
+}
+export interface BlogArcInfo {
+  count: number;
+  blogMap: BlogArcMap[];
 }
 
-// 博客首页接口的返回类型定义
+// 博客首页、分类、标签接口的返回类型定义
 export interface blogListRes {
   code: number;
   msg: string;
   data: {
     blogs: BlogList[];
   };
+}
+
+// 博客详情接口的返回类型定义
+export interface BlogDetailRes {
+  code: number;
+  msg: string;
+  data: {
+    blog: BlogDetail;
+  };
+}
+
+// 博客归档接口的返回类型定义
+export interface BlogArcRes {
+  code: number;
+  msg: string;
+  data: BlogArcInfo;
 }

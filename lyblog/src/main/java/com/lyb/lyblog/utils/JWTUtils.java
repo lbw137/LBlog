@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class JWTUtils {
     private static final String SIGNATURE = "loyalBlog";
-    private static final Integer ACCESS_TOKEN_EXPIRES_IN = 2; // 访问令牌过期时间1小时
+    private static final Integer ACCESS_TOKEN_EXPIRES_IN = 3600; // 访问令牌过期时间1小时
     private static final Integer REFRESH_TOKEN_EXPIRES_IN = 3600 * 24; // 刷新令牌过期时间1天
 
     /**

@@ -12,11 +12,11 @@ const props = defineProps({
   },
   scale: {
     type: String,
-    default: '1'
+    default: '1.5'
   }
 });
 const Icon = '#' + props.icon;
-const Scale = 'transform: scale(' + props.scale + ');';
+const Scale = `width: calc(1rem*${props.scale}); height: calc(1rem*${props.scale})`;
 </script>
 
 <style scoped lang="scss"></style>

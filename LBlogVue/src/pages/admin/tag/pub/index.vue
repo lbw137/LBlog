@@ -53,9 +53,15 @@
 <script setup lang="ts">
 import { reactive, ref, watchEffect } from 'vue';
 import { Chrome } from '@ckpack/vue-color';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
+import { Tag } from '@/api/client/siteInfo/type';
+import { TagRes } from '@/api/admin/tag/type';
+import { reqTagPub, reqTagUpd } from '@/api/admin/tag';
+import { message } from 'ant-design-vue';
+import { useSiteInfo } from '@/store/useSiteInfo';
+const $site = useSiteInfo();
 const $route = useRoute();
-
+const $router = useRouter();
 interface FormState {
   title: string; // 标题
   color: any; // 颜色
@@ -65,8 +71,27 @@ const formState = reactive<FormState>({
   color: ''
 });
 const formRef = ref();
-const onFinish = (values: FormState) => {
-  console.log(values);
+const onFinish = async (values: FormState) => {
+  let res: TagRes;
+  const tag: Tag = {
+    id: Number($route.query.id),
+    ...values
+  };
+  if ($route.query.id) {
+    // 更新
+    res = await reqTagUpd(tag);
+  } else {
+    // 发布
+    res = await reqTagPub(tag);
+  }
+  if (res.code === 200) {
+    $site.getTagsInfo();
+    $site.getBlogsInfo();
+    message.success(res.message);
+    $router.push('/adm/tag/list');
+  } else {
+    message.error(res.message);
+  }
 };
 const onFinishFailed = (errorInfo: any) => {
   console.log(errorInfo);

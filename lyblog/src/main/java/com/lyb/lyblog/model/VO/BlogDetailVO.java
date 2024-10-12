@@ -10,26 +10,34 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class BlogListVO {
+public class BlogDetailVO {
     Integer id;
     String title;
-    String cover;
+    String content;
     Integer views;
     Integer letters;
     Integer readTime;
+    Boolean isReview;
+    Boolean isCommend;
     Boolean isTop;
     LocalDateTime createTime;
+    LocalDateTime publishTime;
+    LocalDateTime updateTime;
     Categories category;
     List<Tags> tags;
 
-    public BlogListVO(Blogs blogs) {
+    public BlogDetailVO(Blogs blogs) {
         this.id = blogs.getId();
         this.title = blogs.getTitle();
-        this.cover = blogs.getCover();
+        this.content = blogs.getContent();
         this.views = blogs.getViews();
         this.letters = blogs.getLetters();
         this.readTime = blogs.getReadTime();
+        this.isReview = blogs.getIsReview();
+        this.isCommend = blogs.getIsCommend();
         this.isTop = blogs.getIsTop();
         this.createTime = blogs.getCreateTime();
+        this.publishTime = blogs.getPublishTime();
+        this.updateTime = blogs.getUpdateTime();
     }
 }

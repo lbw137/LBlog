@@ -7,6 +7,7 @@ export const useStore = defineStore(
     const mouseEffect = ref(true);
     const access_token = ref('');
     const refresh_token = ref('');
+
     return { mouseEffect, access_token, refresh_token };
   },
   {

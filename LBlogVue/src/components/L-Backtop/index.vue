@@ -4,7 +4,7 @@
     @click="scrollToTop"
     :class="{ 'is-visible': showBacktop }"
   >
-    <l-icon icon="icon-paper-airplane" scale="4"></l-icon>
+    <l-icon icon="icon-paper-airplane" scale="5"></l-icon>
   </div>
 </template>
 
@@ -36,8 +36,9 @@ onUnmounted(() => {
 <style scoped lang="scss">
 .l-backtop {
   position: fixed;
-  bottom: 5rem;
-  right: 5rem;
+  bottom: 6%;
+  right: 2%;
+
   cursor: pointer;
   opacity: 0; /* 默认不显示 */
   visibility: hidden; /* 默认不显示 */
