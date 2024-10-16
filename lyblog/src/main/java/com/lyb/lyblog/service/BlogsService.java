@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lyb.lyblog.mapper.BlogsMapper;
 import com.lyb.lyblog.model.DTO.BlogArcDTO;
@@ -11,11 +12,13 @@ import com.lyb.lyblog.model.PO.BlogTag;
 import com.lyb.lyblog.model.PO.Blogs;
 import com.lyb.lyblog.model.VO.BlogArcVO;
 import com.lyb.lyblog.model.VO.BlogDetailVO;
+import com.lyb.lyblog.model.VO.BlogEditVO;
 import com.lyb.lyblog.model.VO.BlogListAdVO;
 import com.lyb.lyblog.model.VO.BlogListVO;
 
 import xin.altitude.cms.common.util.EntityUtils;
 
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -123,5 +126,22 @@ public class BlogsService extends ServiceImpl<BlogsMapper, Blogs> {
             bloglist.get(i).setCategory(categoriesService.getCategoryById(blogs.get(i).getCategoryId()));
         }
         return bloglist;
+    }
+
+    public BlogEditVO getBlogByIdAd(Integer id) {
+        LambdaQueryWrapper<Blogs> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Blogs::getId, id);
+        Blogs blog = this.getOne(queryWrapper);
+        BlogEditVO blogEditVO = EntityUtils.toObj(blog, BlogEditVO::new);
+        blogEditVO.setTags(blogTagService.getTagIdsByBlogId(blog.getId()));
+        return blogEditVO;
+    }
+
+    public Boolean updatePublish(Integer id, Boolean isPublish) {
+        LambdaUpdateWrapper<Blogs> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(Blogs::getId, id);
+        wrapper.set(Blogs::getIsPublish, isPublish);
+        wrapper.set(Blogs::getPublishTime, OffsetDateTime.now());
+        return this.update(wrapper);
     }
 }

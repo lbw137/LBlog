@@ -48,8 +48,6 @@ admin.interceptors.response.use(
         $store.refresh_token = '';
         window.location.href = '/login';
       }
-    } else {
-      message.error(res.data.message);
     }
     // 返回简化数据
     return res.data;

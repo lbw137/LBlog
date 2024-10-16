@@ -50,7 +50,6 @@
                 ok-text="是"
                 cancel-text="否"
                 @confirm="confirm(record)"
-                @cancel="cancel"
               >
                 <a-button type="primary" shape="circle" danger>
                   <template #icon>
@@ -94,16 +93,10 @@ const confirm = async (record: Tag) => {
     $site.getTagsInfo();
     // 刷新博客列表
     $site.getBlogsInfo();
-    message.success({
-      content: res.message,
-      style: {
-        marginTop: '10vh'
-      }
-    });
+    message.success(res.message);
   }
 };
 
-const cancel = (e: MouseEvent) => {};
 const columns = [
   {
     name: 'ID',

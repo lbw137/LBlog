@@ -6,7 +6,7 @@ import com.lyb.lyblog.model.PO.Tags;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Data
@@ -18,7 +18,7 @@ public class BlogListVO {
     Integer letters;
     Integer readTime;
     Boolean isTop;
-    LocalDateTime createTime;
+    OffsetDateTime createTime;
     Categories category;
     List<Tags> tags;
 

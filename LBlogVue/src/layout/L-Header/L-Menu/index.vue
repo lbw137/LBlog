@@ -30,6 +30,8 @@ defineProps({
   }
 });
 const onClick: MenuProps['onClick'] = ({ key }) => {
+  // 如果点击的是当前路由，则不跳转，否则跳转到对应的路由
+  if (current.value.includes(key as string)) return;
   $router.push((key as string).trim());
 };
 </script>

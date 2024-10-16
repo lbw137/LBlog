@@ -3,6 +3,7 @@
     list-type="picture-card"
     :max-count="1"
     :before-upload="beforeUpload"
+    v-model:file-list="fileList"
     @preview="handlePreview"
   >
     <div>
@@ -21,8 +22,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onUnmounted, ref } from 'vue';
 import { PlusOutlined } from '@ant-design/icons-vue';
+import { useSiteInfo } from '@/store/useSiteInfo';
+import { storeToRefs } from 'pinia';
+const $site = useSiteInfo();
+
+const fileList = storeToRefs($site).fileListInfo;
 const previewVisible = ref(false);
 const previewImage = ref('');
 const previewTitle = ref('');
@@ -51,12 +57,16 @@ const handlePreview = async (file: any) => {
   previewVisible.value = true;
   previewTitle.value =
     file.name || file.url.substring(file.url.lastIndexOf('/') + 1);
+  console.log(file);
 };
 // 关闭预览图片
 const handleCancel = () => {
   previewVisible.value = false;
   previewTitle.value = '';
 };
+onUnmounted(() => {
+  $site.fileListInfo = [];
+});
 </script>
 
 <style scoped>

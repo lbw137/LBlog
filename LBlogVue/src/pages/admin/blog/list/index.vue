@@ -13,7 +13,8 @@
             placeholder="请输入文章标题"
             size="large"
             style="width: 50%"
-            @search=""
+            v-model:value="inputValue"
+            @search="onSearch"
           />
         </div>
       </div>
@@ -45,7 +46,10 @@
               </a-tag>
             </template>
             <template v-if="column.key === 'isPublish'">
-              <a-switch v-model:checked="record.isPublish"></a-switch>
+              <a-switch
+                v-model:checked="record.isPublish"
+                @click="onSwitch(record)"
+              ></a-switch>
             </template>
             <template v-if="column.key === 'action'">
               <a-tooltip title="编辑" color="blue">
@@ -53,6 +57,7 @@
                   type="primary"
                   shape="circle"
                   style="margin-right: 1rem"
+                  @click="onEdit(record)"
                 >
                   <template #icon>
                     <l-icon icon="icon-edit"></l-icon>
@@ -86,16 +91,20 @@ import { message } from 'ant-design-vue';
 import { useSiteInfo } from '@/store/useSiteInfo';
 import { storeToRefs } from 'pinia';
 import dayjs from 'dayjs';
+import { BlogListAd } from '@/api/admin/blog/type';
+import { reqBlogDelete, reqBlogPutIsPublish } from '@/api/admin/blog';
+import { useRouter } from 'vue-router';
 const $site = useSiteInfo();
-const confirm = (record: any) => {
-  console.log(record);
-  data.value.splice(data.value.indexOf(record), 1);
-  message.success({
-    content: '删除成功',
-    style: {
-      marginTop: '10vh'
-    }
-  });
+const $router = useRouter();
+const onEdit = (record: BlogListAd) => {
+  $router.push('/adm/blog/pub?id=' + record.id);
+};
+const confirm = async (record: BlogListAd) => {
+  const res = await reqBlogDelete(record.id);
+  $site.getBlogsInfo();
+  $site.getBlogsAdInfo();
+  $site.getBlogsArcInfo();
+  message.success(res.message);
 };
 
 const cancel = (e: MouseEvent) => {
@@ -139,23 +148,56 @@ const columns = [
   }
 ];
 
+// 原始数据
 const data = storeToRefs($site).blogsAdInfo;
 if (data.value.length === 0) {
   $site.getBlogsAdInfo();
 }
+// 搜索过滤
+const searchfilter = computed(() => {
+  if (inputValue.value === '') {
+    searchValue.value = '';
+    return data.value;
+  }
+  return data.value.filter((item) => {
+    if (item.title.toLowerCase().indexOf(searchValue.value.toLowerCase()) >= 0)
+      return true;
+    return false;
+  });
+});
+// 用于在清空搜索框时，重置搜索结果
+const inputValue = ref('');
+// 按下搜索时，将输入的值赋值给searchValue
+const searchValue = ref('');
+const onSearch = (value: string) => {
+  searchValue.value = value;
+};
+// 筛选全部、已发布、未发布的数据
 const filterData = computed(() => {
   if (radioOption.value === 'all') {
-    return data.value;
+    return searchfilter.value;
   } else if (radioOption.value === 'pubed') {
-    return data.value.filter((item: any) => {
+    return searchfilter.value.filter((item) => {
       return item.isPublish === true;
     });
   } else if (radioOption.value === 'unpub') {
-    return data.value.filter((item: any) => {
+    return searchfilter.value.filter((item) => {
       return item.isPublish === false;
     });
   }
 });
+
+// 发布开关
+const onSwitch = async (record: BlogListAd) => {
+  const res = await reqBlogPutIsPublish(record.id, record.isPublish);
+  if (res.code === 200) {
+    message.success(res.message);
+  } else {
+    message.error(res.message);
+  }
+  $site.getBlogsInfo();
+  $site.getBlogsAdInfo();
+};
 
 // 分页
 const current = ref(1);
@@ -204,8 +246,6 @@ const Pagination = computed(() => ({
           text-wrap: nowrap;
         }
       }
-    }
-    .blog-list-content {
     }
   }
 }

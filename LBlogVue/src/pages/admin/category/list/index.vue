@@ -94,12 +94,7 @@ const confirm = async (record: Category) => {
     $site.getMenuCatInfo();
     // 刷新博客列表
     $site.getBlogsInfo();
-    message.success({
-      content: res.message,
-      style: {
-        marginTop: '10vh'
-      }
-    });
+    message.success(res.message);
   }
 };
 
@@ -194,8 +189,6 @@ const Pagination = computed(() => ({
           text-wrap: nowrap;
         }
       }
-    }
-    .category-list-content {
     }
   }
 }

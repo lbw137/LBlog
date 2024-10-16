@@ -6,7 +6,7 @@ enum API {
   // 获取标签列表使用客户端的接口
   CAT_DELETE_URL = 'category/delete',
   CAT_UPDATE_URL = 'category/update',
-  CAT_PUB_URL = 'category/pub'
+  CAT_PUBLISH_URL = 'category/publish'
 }
 
 export const reqCatDel = (id: number) => {
@@ -20,5 +20,5 @@ export const reqCatUpd = (category: Category) => {
 };
 
 export const reqCatPub = (category: Category) => {
-  return admin.post<any, CategoryRes>(API.CAT_PUB_URL, category);
+  return admin.post<any, CategoryRes>(API.CAT_PUBLISH_URL, category);
 };

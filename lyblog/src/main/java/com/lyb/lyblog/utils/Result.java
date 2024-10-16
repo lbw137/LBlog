@@ -41,7 +41,7 @@ public class Result {
 
     public static Result error() {
         Result result = new Result();
-        result.setCode(401);
+        result.setCode(403);
         result.setMessage("失败");
         return result;
     }

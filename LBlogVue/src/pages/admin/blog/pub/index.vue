@@ -30,12 +30,12 @@
         </a-form-item>
         <!-- 分类 -->
         <a-form-item
-          name="category"
+          name="categoryId"
           label="分类"
           :rules="[{ required: true, message: '请选择文章分类' }]"
         >
           <a-select
-            v-model:value="formState.category"
+            v-model:value="formState.categoryId"
             :options="catOptions"
           ></a-select>
         </a-form-item>
@@ -44,7 +44,8 @@
           name="tags"
           label="标签"
           :rules="[
-            { required: true, message: '请至少选择一项标签', type: 'array' }
+            { required: true, message: '请至少选择一项标签', type: 'array' },
+            { max: 5, message: '最多选择5个标签', type: 'array' }
           ]"
         >
           <a-select
@@ -73,18 +74,18 @@
         <!-- 状态 -->
         <a-form-item label="状态">
           <a-row style="height: 3.2rem" :wrap="false">
-            <a-form-item name="commendable" style="margin-right: 2rem">
-              <a-checkbox v-model:checked="formState.commendable">
+            <a-form-item name="isCommend" style="margin-right: 2rem">
+              <a-checkbox v-model:checked="formState.isCommend">
                 赞赏
               </a-checkbox>
             </a-form-item>
-            <a-form-item name="reviewable" style="margin-right: 2rem">
-              <a-checkbox v-model:checked="formState.reviewable">
+            <a-form-item name="isReview" style="margin-right: 2rem">
+              <a-checkbox v-model:checked="formState.isReview">
                 评论
               </a-checkbox>
             </a-form-item>
-            <a-form-item name="topped">
-              <a-checkbox v-model:checked="formState.topped">置顶</a-checkbox>
+            <a-form-item name="isTop">
+              <a-checkbox v-model:checked="formState.isTop">置顶</a-checkbox>
             </a-form-item>
           </a-row>
         </a-form-item>
@@ -92,15 +93,27 @@
         <a-form-item
           label="封面"
           name="cover"
-          :rules="[{ required: true, message: '请选择文章封面' }]"
+          :rules="[{ required: !$route.query.id, message: '请选择文章封面' }]"
         >
           <l-upload @update="getCover"></l-upload>
         </a-form-item>
         <!-- 按钮 -->
         <a-form-item :wrapper-col="{ span: 24 }">
           <a-row justify="end" wrap="false">
-            <a-button type="primary" html-type="submit">发布</a-button>
-            <a-button @click="onSave" style="margin: 0 4%"> 保存 </a-button>
+            <a-button
+              type="primary"
+              html-type="submit"
+              style="margin-right: 4%"
+            >
+              {{ $route.query.id ? '更新' : '发布' }}
+            </a-button>
+            <a-button
+              @click="onSave"
+              style="margin-right: 4%"
+              v-if="!$route.query.id"
+            >
+              保存
+            </a-button>
             <a-button
               @click="resetForm"
               type="primary"
@@ -117,40 +130,69 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue';
-import type { SelectProps } from 'ant-design-vue';
+import { computed, reactive, ref, watchEffect } from 'vue';
 import { MdEditor } from 'md-editor-v3';
 import 'md-editor-v3/lib/style.css';
-import type { Tag } from '@/api/client/siteInfo/type';
-import { reqTags } from '@/api/client/siteInfo';
-interface FormState {
-  title: string; // 标题
-  content: string; // 内容
-  category: string; // 分类
-  tags: string[]; // 标签
-  cover: File | null; // 封面
-  commendable: boolean; // 赞赏
-  reviewable: boolean; // 评论
-  topped: boolean; // 置顶
-}
-const onUploadImg = (files: File[]) => {
-  console.log(files);
+import { reqUpload } from '@/api/admin/upload';
+import { useSiteInfo } from '@/store/useSiteInfo';
+import { storeToRefs } from 'pinia';
+import { BlogPub, BlogRes } from '@/api/admin/blog/type';
+import { reqBlogById, reqBlogPub, reqBlogUpdate } from '@/api/admin/blog';
+import { message } from 'ant-design-vue';
+import { useRouter, useRoute } from 'vue-router';
+const $route = useRoute();
+const $router = useRouter();
+const $site = useSiteInfo();
+// 上传图片
+const onUploadImg = async (files: File[], callback) => {
+  const res = await Promise.all(
+    files.map(async (file) => {
+      return reqUpload(file);
+    })
+  );
+  callback(res.map((item) => item.data.fileUrl));
 };
-const formState = reactive<FormState>({
+const formState = reactive<BlogPub>({
   title: '',
-  content: `### 关于 Editor.md
-
-**Editor.md** 是一款开源的、可嵌入的 Markdown 在线编辑器（组件），基于 CodeMirror、jQuery 和 Marked 构建。`,
-  category: '学习笔记',
-  tags: [],
+  content: '',
   cover: null,
-  commendable: true,
-  reviewable: true,
-  topped: false
+  letters: 0,
+  readTime: 0,
+  isReview: true,
+  isPublish: false,
+  isCommend: true,
+  isTop: false,
+  createTime: null,
+  publishTime: null,
+  updateTime: null,
+  tags: [],
+  categoryId: 1
 });
 const formRef = ref();
-const onFinish = (values: FormState) => {
-  console.log(values);
+const onFinish = async (values: BlogPub) => {
+  values.letters = values.content.length;
+  values.readTime = Math.ceil(values.letters / 200);
+  let res: BlogRes;
+  // 发布
+  if (!$route.query.id) {
+    values.isPublish = true;
+    values.createTime = new Date();
+    values.publishTime = new Date();
+    values.updateTime = new Date();
+    res = await reqBlogPub(values);
+  } else {
+    values.updateTime = new Date();
+    res = await reqBlogUpdate(Number($route.query.id), values);
+  }
+  if (res.code == 200) {
+    $site.getBlogsInfo();
+    $site.getBlogsAdInfo();
+    $site.getBlogsArcInfo();
+    message.success(res.message);
+    if (!$route.query.id) $router.push('/adm/blog/list');
+  } else {
+    message.error(res.message);
+  }
 };
 const onFinishFailed = (errorInfo: any) => {
   console.log(errorInfo);
@@ -159,8 +201,21 @@ const onFinishFailed = (errorInfo: any) => {
 const onSave = async () => {
   formRef.value
     .validate()
-    .then(() => {
-      console.log('values', formState);
+    .then(async () => {
+      formState.letters = formState.content.length;
+      formState.readTime = Math.ceil(formState.letters / 200);
+      formState.createTime = new Date();
+      formState.updateTime = new Date();
+      const res = await reqBlogPub(formState);
+      if (res.code == 200) {
+        $site.getBlogsInfo();
+        $site.getBlogsAdInfo();
+        $site.getBlogsArcInfo();
+        message.success(res.message);
+        $router.push('/adm/blog/list');
+      } else {
+        message.error(res.message);
+      }
     })
     .catch((error) => {
       console.log('error', error);
@@ -173,19 +228,17 @@ const resetForm = () => {
 };
 
 // 分类
-const catOptions = ref<SelectProps['options']>([
-  {
-    value: '学习笔记',
-    label: '学习笔记'
-  },
-  {
-    value: '生活日记',
-    label: '生活日记'
-  }
-]);
-
+const categories = storeToRefs($site).categoriesInfo;
+const catOptions = computed(() => {
+  return categories.value?.map((item) => {
+    return {
+      value: item.id,
+      label: item.title
+    };
+  });
+});
 // 标签
-const tagOptions = ref<Tag[]>([]);
+const tagOptions = storeToRefs($site).tagsInfo;
 const filterOption = (input: string, option: any) => {
   return option.title.toLowerCase().indexOf(input.toLowerCase()) >= 0;
 };
@@ -195,9 +248,16 @@ const getCover = (file: File) => {
   formState.cover = file;
 };
 
-onMounted(async () => {
-  const res = await reqTags();
-  if (res.code === 200) tagOptions.value = res.data.tags;
+watchEffect(async () => {
+  if ($route.query.id) {
+    const res = await reqBlogById(Number($route.query.id));
+    if (res.code === 200) {
+      Object.keys(res.data.blog).forEach((key) => {
+        if (key !== 'coverUrl') formState[key] = res.data.blog[key];
+      });
+      $site.getFileListInfo(res.data.blog.coverUrl);
+    }
+  }
 });
 </script>
 

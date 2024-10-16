@@ -6,7 +6,7 @@ enum API {
   // 获取标签列表使用客户端的接口
   TAGS_DELETE_URL = 'tags/delete',
   TAGS_UPDATE_URL = 'tags/update',
-  TAGS_PUB_URL = 'tags/pub'
+  TAGS_PUBLISH_URL = 'tags/publish'
 }
 
 export const reqTagDel = (id: number) => {
@@ -20,5 +20,5 @@ export const reqTagUpd = (tag: Tag) => {
 };
 
 export const reqTagPub = (tag: Tag) => {
-  return admin.post<any, TagRes>(API.TAGS_PUB_URL, tag);
+  return admin.post<any, TagRes>(API.TAGS_PUBLISH_URL, tag);
 };

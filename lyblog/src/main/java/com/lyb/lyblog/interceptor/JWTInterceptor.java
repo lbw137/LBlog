@@ -18,7 +18,7 @@ public class JWTInterceptor implements HandlerInterceptor {
             throws Exception {
         Result result = new Result();
         String Authorization = request.getHeader("Authorization");
-        if (Authorization == null) {
+        if (Authorization == null || Authorization.split(" ").length == 1) {
             result.setMessage("未登录");
             result.setCode(401);
             String json = new ObjectMapper().writeValueAsString(result);

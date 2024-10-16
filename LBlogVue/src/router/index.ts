@@ -120,7 +120,7 @@ const router = createRouter({
 router.beforeEach(async (to) => {
   const $store = useStore();
   if (to.name === 'login') return true;
-  if (to.path.includes('admin')) {
+  if (to.path.includes('adm')) {
     if (!$store.refresh_token) return { name: 'login' };
     return true;
   }

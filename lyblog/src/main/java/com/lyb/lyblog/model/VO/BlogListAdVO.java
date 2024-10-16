@@ -1,6 +1,6 @@
 package com.lyb.lyblog.model.VO;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import com.lyb.lyblog.model.PO.Blogs;
 import com.lyb.lyblog.model.PO.Categories;
@@ -11,8 +11,8 @@ import lombok.Data;
 public class BlogListAdVO {
     Integer id;
     String title;
-    LocalDateTime createTime;
-    LocalDateTime updateTime;
+    OffsetDateTime createTime;
+    OffsetDateTime updateTime;
     Categories category;
     Boolean isPublish;
 

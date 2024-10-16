@@ -1,7 +1,7 @@
 import { reqCategories, reqTags } from '@/api/client/siteInfo';
 import { SubMenuType } from 'antd/es/menu/interface';
 import { routes } from '@/router';
-import { MenuProps } from 'ant-design-vue';
+import { MenuProps, UploadProps } from 'ant-design-vue';
 import { defineStore } from 'pinia';
 import { ref, h } from 'vue';
 import { Category, Tag } from '@/api/client/siteInfo/type';
@@ -114,6 +114,20 @@ export const useSiteInfo = defineStore('SiteStore', () => {
     }
   };
 
+  /**
+   * @description: 获取编辑博客时的封面信息
+   */
+  const fileListInfo = ref<UploadProps['fileList']>([]);
+  const getFileListInfo = async (coverUrl: string) => {
+    fileListInfo.value = [
+      {
+        uid: '-1',
+        name: 'image.png',
+        status: 'done',
+        url: coverUrl
+      }
+    ];
+  };
   return {
     getSiteInfo,
     // 菜单和分类信息
@@ -132,6 +146,9 @@ export const useSiteInfo = defineStore('SiteStore', () => {
     getTagsInfo,
     // 博客管理端信息
     blogsAdInfo,
-    getBlogsAdInfo
+    getBlogsAdInfo,
+    // 编辑博客时的封面信息
+    fileListInfo,
+    getFileListInfo
   };
 });
