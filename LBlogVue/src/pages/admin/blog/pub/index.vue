@@ -139,7 +139,11 @@ import { storeToRefs } from 'pinia';
 import { BlogPub, BlogRes } from '@/api/admin/blog/type';
 import { reqBlogById, reqBlogPub, reqBlogUpdate } from '@/api/admin/blog';
 import { message } from 'ant-design-vue';
-import { useRouter, useRoute } from 'vue-router';
+import {
+  useRouter,
+  useRoute,
+  RouteLocationNormalizedLoadedGeneric
+} from 'vue-router';
 const $route = useRoute();
 const $router = useRouter();
 const $site = useSiteInfo();
@@ -152,7 +156,7 @@ const onUploadImg = async (files: File[], callback) => {
   );
   callback(res.map((item) => item.data.fileUrl));
 };
-const formState = reactive<BlogPub>({
+const defaultForm: BlogPub = {
   title: '',
   content: '',
   cover: null,
@@ -167,7 +171,8 @@ const formState = reactive<BlogPub>({
   updateTime: null,
   tags: [],
   categoryId: 1
-});
+};
+let formState = reactive<BlogPub>(JSON.parse(JSON.stringify(defaultForm)));
 const formRef = ref();
 const onFinish = async (values: BlogPub) => {
   values.letters = values.content.length;
@@ -248,6 +253,7 @@ const getCover = (file: File) => {
   formState.cover = file;
 };
 
+let beforeRoute: RouteLocationNormalizedLoadedGeneric | null = null;
 watchEffect(async () => {
   if ($route.query.id) {
     const res = await reqBlogById(Number($route.query.id));
@@ -257,6 +263,13 @@ watchEffect(async () => {
       });
       $site.getFileListInfo(res.data.blog.coverUrl);
     }
+  }
+  if (beforeRoute?.query.id) {
+    formState = reactive<BlogPub>(JSON.parse(JSON.stringify(defaultForm)));
+    $site.resetFileListInfo();
+  }
+  if ($route.fullPath.includes('/pub')) {
+    beforeRoute = JSON.parse(JSON.stringify($route));
   }
 });
 </script>

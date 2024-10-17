@@ -128,6 +128,9 @@ export const useSiteInfo = defineStore('SiteStore', () => {
       }
     ];
   };
+  const resetFileListInfo = () => {
+    fileListInfo.value = [];
+  };
   return {
     getSiteInfo,
     // 菜单和分类信息
@@ -149,6 +152,7 @@ export const useSiteInfo = defineStore('SiteStore', () => {
     getBlogsAdInfo,
     // 编辑博客时的封面信息
     fileListInfo,
-    getFileListInfo
+    getFileListInfo,
+    resetFileListInfo
   };
 });

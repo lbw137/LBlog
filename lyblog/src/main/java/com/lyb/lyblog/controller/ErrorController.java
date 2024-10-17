@@ -1,5 +1,6 @@
 package com.lyb.lyblog.controller;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -18,6 +19,14 @@ public class ErrorController {
     public ResponseEntity<Result> handleNoHandlerFoundException(NoHandlerFoundException exception) {
         Result result = Result.error().message("请求路径不存在").code(404);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+    }
+
+    // 处理数据完整性约束异常
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseBody
+    public ResponseEntity<Result> handleDataIntegrityViolationException(DataIntegrityViolationException exception) {
+        Result result = Result.error().message("数据完整性约束失败").code(500);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
     }
 
     // 处理所有其他异常

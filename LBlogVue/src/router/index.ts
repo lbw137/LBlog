@@ -121,7 +121,7 @@ router.beforeEach(async (to) => {
   const $store = useStore();
   if (to.name === 'login') return true;
   if (to.path.includes('adm')) {
-    if (!$store.refresh_token) return { name: 'login' };
+    if ($store.isExpired()) return { name: 'login' };
     return true;
   }
 });

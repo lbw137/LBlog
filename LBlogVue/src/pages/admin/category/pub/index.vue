@@ -111,6 +111,10 @@ watchEffect(() => {
   if ((typeof formState.color as Object) === 'object') {
     formState.color = formState.color.hex;
   }
+  if (!$route.query.id) {
+    formState.title = '';
+    formState.color = '#000';
+  }
 });
 </script>
 

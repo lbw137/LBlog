@@ -9,7 +9,9 @@
         <a-menu-item key="pub"> 发布 </a-menu-item>
       </a-menu>
       <router-view v-slot="{ Component }">
-        <component :is="Component" />
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
       </router-view>
     </div>
     <!-- 底部区域 -->

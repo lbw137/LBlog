@@ -1,7 +1,6 @@
 package com.lyb.lyblog.utils;
 
 import java.io.IOException;
-import java.util.Properties;
 
 import org.springframework.web.multipart.MultipartFile;
 

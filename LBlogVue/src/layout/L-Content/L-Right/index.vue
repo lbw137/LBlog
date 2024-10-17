@@ -5,25 +5,16 @@
         <BookOutlined style="margin-right: 1rem" />随机文章
       </template>
       <ul>
-        <li>
-          <div class="img"></div>
+        <li v-for="blog in randomBlog" :key="blog.id">
+          <div
+            class="img"
+            :style="{
+              backgroundImage: `url(${blog.cover})`
+            }"
+          ></div>
           <div class="msg">
-            <p>2024-09-18</p>
-            <p>Vue3常用知识点</p>
-          </div>
-        </li>
-        <li>
-          <div class="img"></div>
-          <div class="msg">
-            <p>2024-09-18</p>
-            <p>Vue3常用知识点</p>
-          </div>
-        </li>
-        <li>
-          <div class="img"></div>
-          <div class="msg">
-            <p>2024-09-18</p>
-            <p>Vue3常用知识点asdasdasdasdasdasd</p>
+            <p>{{ blog.createTime }}</p>
+            <p>{{ blog.title }}</p>
           </div>
         </li>
       </ul>
@@ -52,8 +43,23 @@ import { BookOutlined, TagsOutlined } from '@ant-design/icons-vue';
 import { useRouter } from 'vue-router';
 import { useSiteInfo } from '@/store/useSiteInfo';
 import { storeToRefs } from 'pinia';
+import { BlogList } from '@/api/client/blog/type';
 const $site = useSiteInfo();
 const $router = useRouter();
+const getRandomItems = (arr: BlogList[], count: number) => {
+  const shuffled = arr.slice(0); // 复制原数组
+  const result: BlogList[] = []; // 存储随机选取的元素
+  const n = shuffled.length;
+  // 循环直到原数组元素用尽或已选取所需数量的元素
+  for (let i = 0; i < count && i < n; i++) {
+    const j = Math.floor(Math.random() * shuffled.length); // 随机索引
+    result.push(shuffled.splice(j, 1)[0]); // 从洗牌数组中移除并返回一个随机元素
+  }
+  return result; // 返回随机选取的元素数组
+};
+const blogList = storeToRefs($site).blogsInfo;
+// 从blogList中随机取5个
+const randomBlog = getRandomItems(blogList.value, 5);
 const tagList = storeToRefs($site).tagsInfo;
 const onTagClick = (tag: Tag) => {
   $router.push({
